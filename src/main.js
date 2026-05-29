@@ -49,7 +49,6 @@ scene.add(duck);
 
 let targetRotation = 0;
 let currentRotation = 0;
-let targetFloat = 0;
 let modelLoaded = false;
 
 const loader = new GLTFLoader();
@@ -60,35 +59,32 @@ loader.load(
 
     model.traverse((node) => {
       if (!node.isMesh) return;
-
       if (node.geometry) {
         node.geometry.computeVertexNormals();
         node.geometry.computeBoundingBox();
         node.geometry.computeBoundingSphere();
       }
-
       node.material = duckMaterial;
       node.castShadow = false;
       node.receiveShadow = false;
       node.frustumCulled = false;
     });
 
+    // Centralizar modelo
     const box = new THREE.Box3().setFromObject(model);
-    const size = new THREE.Vector3();
     const center = new THREE.Vector3();
-
-    box.getSize(size);
     box.getCenter(center);
+    model.position.sub(center);
 
-    model.position.x -= center.x;
-    model.position.y -= center.y;
-    model.position.z -= center.z;
-
-    const maxDimension = Math.max(size.x, size.y, size.z);
-    const scale = maxDimension > 0 ? 2.45 / maxDimension : 1;
+    // Escalar
+    const size = new THREE.Vector3();
+    box.getSize(size);
+    const maxDim = Math.max(size.x, size.y, size.z);
+    const scale = maxDim > 0 ? 2.45 / maxDim : 1;
     model.scale.setScalar(scale);
 
-    model.rotation.x = 0;
+    // Corrigir rotação inicial (posição correta)
+    model.rotation.x = Math.PI / 2; // gira para ficar de pé corretamente
     model.rotation.y = 0;
     model.rotation.z = 0;
 
@@ -108,8 +104,7 @@ function getScrollProgress() {
 
 function updateScrollValues() {
   const progress = getScrollProgress();
-  targetRotation = progress * Math.PI * 4;
-  targetFloat = Math.sin(progress * Math.PI * 2) * 0.08;
+  targetRotation = progress * Math.PI * 2; // gira 360º durante o scroll
 }
 
 window.addEventListener('scroll', updateScrollValues, { passive: true });
@@ -118,10 +113,8 @@ updateScrollValues();
 function resize() {
   const width = window.innerWidth;
   const height = window.innerHeight;
-
   camera.aspect = width / height;
   camera.updateProjectionMatrix();
-
   renderer.setSize(width, height);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
 }
@@ -131,14 +124,9 @@ window.addEventListener('resize', resize);
 function animate() {
   requestAnimationFrame(animate);
 
+  // interpolação suave
   currentRotation += (targetRotation - currentRotation) * 0.075;
-
   duck.rotation.y = currentRotation;
-  duck.position.y += (targetFloat - duck.position.y) * 0.05;
-
-  if (!modelLoaded) {
-    duck.rotation.y += 0;
-  }
 
   renderer.render(scene, camera);
 }
