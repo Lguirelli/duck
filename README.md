@@ -1,30 +1,28 @@
-# Duck Scroll 3D POC Lite
+# Pato 3D Scroll POC
 
-Prova de conceito de um pato 3D controlado pelo scroll da página.
+Prova de conceito leve para um pato 3D controlado pelo scroll.
 
-Esta versão não carrega arquivo OBJ externo. O pato é feito com geometrias simples do Three.js para ficar mais leve e evitar erro de carregamento.
+## Como usar
 
-## Rodar localmente
+Abra o arquivo `index.html` direto no navegador.
 
-```bash
-npm install
-npm run dev
-```
+Não precisa de:
 
-Depois abra o endereço mostrado no terminal.
-
-## Build
-
-```bash
-npm run build
-```
+- npm
+- Vite
+- Three.js
+- OBJ
+- GLB
+- servidor local
 
 ## Estrutura
 
 ```txt
 index.html
-src/styles.css
-src/main.js
-package.json
 README.md
 ```
+
+## Observação
+
+Esta versão usa CSS 3D e formas vetoriais para evitar erro de carregamento de modelo externo.
+Depois, o mesmo comportamento de scroll pode ser reaplicado em Three.js com um GLB otimizado.
