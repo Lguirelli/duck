@@ -1,11 +1,17 @@
 # Duck Scroll 3D
 
-Pato GLB centralizado em fundo preto, com rotação controlada pelo scroll e material amarelo tipo borracha aplicado via código.
+Versão com o GLB original preservado.
 
-O arquivo `assets/models/duck.glb` foi otimizado removendo texturas pesadas e mantendo a geometria do pato.
+- Fundo preto
+- Sem textos na tela
+- Pato centralizado
+- Material amarelo com textura procedural leve de borracha
+- Normal smoothing via código
+- Rotação controlada pelo scroll
+- Pronto para GitHub Pages
 
-## Como rodar
+## Teste
 
-Use Live Server no VS Code ou publique no GitHub Pages, Vercel ou Netlify.
+Use GitHub Pages, Live Server no VS Code, Netlify ou Vercel.
 
-Evite abrir com `file:///`, porque o navegador pode bloquear o carregamento do GLB.
+Evite abrir por `file:///`, porque navegadores podem bloquear módulos JavaScript e GLB local.
