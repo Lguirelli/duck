@@ -1,65 +1,46 @@
 <!doctype html>
 <html lang="pt-BR">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Duck 3D Scroll POC</title>
-  <link rel="stylesheet" href="./src/styles.css" />
-</head>
-<body>
-  <div class="webgl-shell" aria-hidden="true">
-    <canvas id="duckCanvas"></canvas>
-    <div id="loaderStatus" class="loader-status">carregando pato 3D...</div>
-  </div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pato 3D Scroll POC</title>
+    <link rel="stylesheet" href="/src/styles.css" />
+  </head>
+  <body>
+    <main class="page">
+      <section class="hero section">
+        <div class="copy">
+          <span class="kicker">Prova de conceito</span>
+          <h1>Pato 3D controlado pelo scroll</h1>
+          <p>
+            Elemento 3D leve, criado direto no Three.js, sem carregar OBJ externo.
+            O pato gira conforme o avanço da página.
+          </p>
+        </div>
 
-  <main class="page">
-    <section class="hero section">
-      <div class="content">
-        <span class="kicker">Prova de conceito</span>
-        <h1>Pato 3D controlado pelo scroll</h1>
+        <div class="scene-wrap" aria-label="Pato 3D amarelo">
+          <canvas id="duck-canvas"></canvas>
+        </div>
+      </section>
+
+      <section class="section content-section">
+        <span class="kicker">Scroll interaction</span>
+        <h2>Role a página</h2>
         <p>
-          Modelo OBJ carregado no navegador, com material amarelo emborrachado,
-          iluminação de estúdio e rotação vinculada ao avanço da página.
+          A rotação do elemento acompanha o scroll. Esse comportamento pode ser usado
+          depois em uma seção de landing page, portfolio, apresentação de produto ou hero visual.
         </p>
-      </div>
-    </section>
+      </section>
 
-    <section class="section section--right">
-      <div class="content card">
-        <span class="kicker">Material</span>
-        <h2>Amarelo borracha</h2>
+      <section class="section content-section">
+        <span class="kicker">Modelo leve</span>
+        <h2>Sem arquivo 3D pesado</h2>
         <p>
-          O material original do OBJ é ignorado. O modelo recebe cor amarela,
-          rugosidade alta e textura procedural para simular borracha fosca.
+          Esta versão usa geometrias simples para evitar erro de carregamento e manter a prova de conceito rápida.
         </p>
-      </div>
-    </section>
+      </section>
+    </main>
 
-    <section class="section section--left">
-      <div class="content card">
-        <span class="kicker">Interação</span>
-        <h2>Scroll como controle</h2>
-        <p>
-          Ao rolar a página, o objeto gira em 360 graus, com leve inclinação e
-          movimento suave para dar sensação de peça 3D real na interface.
-        </p>
-      </div>
-    </section>
-
-    <section class="section section--center">
-      <div class="content card">
-        <span class="kicker">Uso futuro</span>
-        <h2>Pronto para virar elemento de site</h2>
-        <p>
-          A base pode virar uma seção hero, mascote visual, elemento interativo
-          de portfólio ou peça de landing page controlada pelo scroll.
-        </p>
-      </div>
-    </section>
-  </main>
-
-  <div class="scroll-hint">role para girar</div>
-
-  <script type="module" src="./src/main.js"></script>
-</body>
+    <script type="module" src="/src/main.js"></script>
+  </body>
 </html>
