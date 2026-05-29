@@ -1,13 +1,13 @@
 # Duck Scroll 3D
 
-Prova de conceito simples: pato 3D amarelo girando conforme o scroll em fundo preto.
+Pato 3D amarelo em fundo preto, girando com o scroll.
 
-## Como rodar sem terminal
+## Rodar sem terminal
 
-Abra a pasta no VS Code e use a extensão Live Server no arquivo `index.html`.
+Use VS Code + Live Server no arquivo `index.html`.
 
-Também funciona publicado em GitHub Pages, Vercel ou Netlify.
+Também funciona em GitHub Pages, Vercel ou Netlify.
 
-## Arquivo 3D
+## Observação
 
-O arquivo original foi convertido para `assets/models/duck.glb`, com geometria otimizada e material simplificado para web.
+A versão anterior podia ficar com tela preta porque o `GLTFLoader` importado por CDN depende do módulo `three` resolvido por import map. Esta versão já inclui o import map no `index.html`.

@@ -1,13 +1,14 @@
-import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.164.1/build/three.module.js';
-import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.164.1/examples/jsm/loaders/GLTFLoader.js';
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
-const canvas = document.querySelector('#duckCanvas');
+const MODEL_URL = './assets/models/duck.glb';
+const canvas = document.getElementById('duckCanvas');
 
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x000000);
 
 const camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 0.01, 100);
-camera.position.set(0, 0.05, 4.2);
+camera.position.set(0, 0.08, 4.4);
 
 const renderer = new THREE.WebGLRenderer({
   canvas,
@@ -16,87 +17,103 @@ const renderer = new THREE.WebGLRenderer({
   powerPreference: 'high-performance'
 });
 
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.75));
 renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = 1.05;
+renderer.toneMappingExposure = 1.1;
 
-const ambientLight = new THREE.AmbientLight(0xffffff, 1.25);
+const ambientLight = new THREE.AmbientLight(0xffffff, 1.4);
 scene.add(ambientLight);
 
-const keyLight = new THREE.DirectionalLight(0xffffff, 2.2);
-keyLight.position.set(3, 4, 5);
+const keyLight = new THREE.DirectionalLight(0xffffff, 2.5);
+keyLight.position.set(3.5, 4, 5);
 scene.add(keyLight);
 
-const fillLight = new THREE.DirectionalLight(0xffffff, 0.75);
-fillLight.position.set(-4, 1.5, 3);
+const fillLight = new THREE.DirectionalLight(0xffffff, 0.9);
+fillLight.position.set(-3, 2, 3);
 scene.add(fillLight);
+
+const rimLight = new THREE.DirectionalLight(0xffffff, 0.8);
+rimLight.position.set(0, 2, -4);
+scene.add(rimLight);
 
 const duckMaterial = new THREE.MeshStandardMaterial({
   color: 0xffd100,
-  roughness: 0.58,
-  metalness: 0,
-  envMapIntensity: 0.15
+  roughness: 0.62,
+  metalness: 0
 });
 
 const duck = new THREE.Group();
 scene.add(duck);
 
-let loadedModel = null;
 let targetRotation = 0;
 let currentRotation = 0;
+let targetFloat = 0;
+let modelLoaded = false;
 
 const loader = new GLTFLoader();
 loader.load(
-  './assets/models/duck.glb',
+  MODEL_URL,
   (gltf) => {
-    loadedModel = gltf.scene;
+    const model = gltf.scene;
 
-    loadedModel.traverse((node) => {
+    model.traverse((node) => {
       if (!node.isMesh) return;
+
+      if (node.geometry) {
+        node.geometry.computeVertexNormals();
+        node.geometry.computeBoundingBox();
+        node.geometry.computeBoundingSphere();
+      }
+
       node.material = duckMaterial;
       node.castShadow = false;
       node.receiveShadow = false;
-      node.frustumCulled = true;
+      node.frustumCulled = false;
     });
 
-    const box = new THREE.Box3().setFromObject(loadedModel);
+    const box = new THREE.Box3().setFromObject(model);
     const size = new THREE.Vector3();
     const center = new THREE.Vector3();
+
     box.getSize(size);
     box.getCenter(center);
 
-    loadedModel.position.sub(center);
+    model.position.x -= center.x;
+    model.position.y -= center.y;
+    model.position.z -= center.z;
 
     const maxDimension = Math.max(size.x, size.y, size.z);
-    const scale = maxDimension > 0 ? 2.25 / maxDimension : 1;
-    loadedModel.scale.setScalar(scale);
+    const scale = maxDimension > 0 ? 2.45 / maxDimension : 1;
+    model.scale.setScalar(scale);
 
-    loadedModel.rotation.x = 0;
-    loadedModel.rotation.y = 0;
-    loadedModel.rotation.z = 0;
+    model.rotation.x = 0;
+    model.rotation.y = 0;
+    model.rotation.z = 0;
 
-    duck.add(loadedModel);
+    duck.add(model);
+    modelLoaded = true;
   },
   undefined,
   (error) => {
-    console.error('Erro ao carregar duck.glb:', error);
+    console.error('Erro ao carregar o modelo GLB:', error);
   }
 );
 
 function getScrollProgress() {
   const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-  if (maxScroll <= 0) return 0;
-  return window.scrollY / maxScroll;
+  return maxScroll > 0 ? window.scrollY / maxScroll : 0;
 }
 
-function updateScrollRotation() {
-  targetRotation = getScrollProgress() * Math.PI * 4;
+function updateScrollValues() {
+  const progress = getScrollProgress();
+  targetRotation = progress * Math.PI * 4;
+  targetFloat = Math.sin(progress * Math.PI * 2) * 0.08;
 }
 
-window.addEventListener('scroll', updateScrollRotation, { passive: true });
-updateScrollRotation();
+window.addEventListener('scroll', updateScrollValues, { passive: true });
+updateScrollValues();
 
 function resize() {
   const width = window.innerWidth;
@@ -104,8 +121,9 @@ function resize() {
 
   camera.aspect = width / height;
   camera.updateProjectionMatrix();
+
   renderer.setSize(width, height);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.75));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
 }
 
 window.addEventListener('resize', resize);
@@ -113,8 +131,14 @@ window.addEventListener('resize', resize);
 function animate() {
   requestAnimationFrame(animate);
 
-  currentRotation += (targetRotation - currentRotation) * 0.08;
+  currentRotation += (targetRotation - currentRotation) * 0.075;
+
   duck.rotation.y = currentRotation;
+  duck.position.y += (targetFloat - duck.position.y) * 0.05;
+
+  if (!modelLoaded) {
+    duck.rotation.y += 0;
+  }
 
   renderer.render(scene, camera);
 }
