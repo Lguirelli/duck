@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Duck 3D Scroll POC</title>
+  <link rel="stylesheet" href="./src/styles.css" />
+</head>
+<body>
+  <main class="page">
+    <section class="hero section">
+      <div class="content">
+        <span class="kicker">Prova de conceito</span>
+        <h1>Pato 3D controlado pelo scroll</h1>
+        <p>
+          Modelo OBJ carregado no navegador, com material amarelo emborrachado,
+          iluminação de estúdio e rotação vinculada ao avanço da página.
+        </p>
+      </div>
+    </section>
+
+    <section class="section section--right">
+      <div class="content card">
+        <span class="kicker">Material</span>
+        <h2>Amarelo borracha</h2>
+        <p>
+          O material original do OBJ é ignorado. O modelo recebe uma textura procedural
+          com leve rugosidade para simular borracha fosca.
+        </p>
+      </div>
+    </section>
+
+    <section class="section section--left">
+      <div class="content card">
+        <span class="kicker">Interação</span>
+        <h2>Scroll como controle</h2>
+        <p>
+          Ao rolar a página, o objeto gira em 360 graus, com leve inclinação para dar
+          sensação de peça 3D real dentro da interface.
+        </p>
+      </div>
+    </section>
+
+    <section class="section section--center">
+      <div class="content card">
+        <span class="kicker">Uso futuro</span>
+        <h2>Pronto para virar elemento de site</h2>
+        <p>
+          Este projeto pode ser adaptado para uma landing page, seção hero,
+          portfólio interativo ou mascote visual da marca.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <div class="webgl-shell" aria-hidden="true">
+    <canvas id="duckCanvas"></canvas>
+  </div>
+
+  <div class="scroll-hint">role para girar</div>
+
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>
