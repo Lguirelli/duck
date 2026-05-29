@@ -7,6 +7,11 @@
   <link rel="stylesheet" href="./src/styles.css" />
 </head>
 <body>
+  <div class="webgl-shell" aria-hidden="true">
+    <canvas id="duckCanvas"></canvas>
+    <div id="loaderStatus" class="loader-status">carregando pato 3D...</div>
+  </div>
+
   <main class="page">
     <section class="hero section">
       <div class="content">
@@ -24,8 +29,8 @@
         <span class="kicker">Material</span>
         <h2>Amarelo borracha</h2>
         <p>
-          O material original do OBJ é ignorado. O modelo recebe uma textura procedural
-          com leve rugosidade para simular borracha fosca.
+          O material original do OBJ é ignorado. O modelo recebe cor amarela,
+          rugosidade alta e textura procedural para simular borracha fosca.
         </p>
       </div>
     </section>
@@ -35,8 +40,8 @@
         <span class="kicker">Interação</span>
         <h2>Scroll como controle</h2>
         <p>
-          Ao rolar a página, o objeto gira em 360 graus, com leve inclinação para dar
-          sensação de peça 3D real dentro da interface.
+          Ao rolar a página, o objeto gira em 360 graus, com leve inclinação e
+          movimento suave para dar sensação de peça 3D real na interface.
         </p>
       </div>
     </section>
@@ -46,16 +51,12 @@
         <span class="kicker">Uso futuro</span>
         <h2>Pronto para virar elemento de site</h2>
         <p>
-          Este projeto pode ser adaptado para uma landing page, seção hero,
-          portfólio interativo ou mascote visual da marca.
+          A base pode virar uma seção hero, mascote visual, elemento interativo
+          de portfólio ou peça de landing page controlada pelo scroll.
         </p>
       </div>
     </section>
   </main>
-
-  <div class="webgl-shell" aria-hidden="true">
-    <canvas id="duckCanvas"></canvas>
-  </div>
 
   <div class="scroll-hint">role para girar</div>
 

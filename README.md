@@ -1,26 +1,23 @@
 # Duck Scroll 3D POC
 
-Prova de conceito de um elemento 3D para site usando Three.js.
+Prova de conceito com Three.js, Vite e OBJLoader.
 
-## O que tem no projeto
-
-- Modelo OBJ do pato em `assets/models/duck.obj`
-- Material amarelo estilo borracha fosca
-- Textura procedural de borracha via `CanvasTexture`
-- Iluminação de estúdio
-- Rotação do pato controlada pelo scroll da página
-- Estrutura simples para subir em um repositório
-
-## Como rodar localmente
+## Como rodar
 
 ```bash
 npm install
 npm run dev
 ```
 
-Depois, abra a URL indicada pelo Vite no navegador.
+Depois abra o endereço mostrado no terminal.
 
-## Observação
+## Observação importante
 
-Não abra o `index.html` direto pelo navegador, porque o carregamento do OBJ precisa de servidor local.
-Use Vite, Live Server ou outro servidor estático.
+Não abra o `index.html` direto no navegador. O carregamento de módulos JS e do arquivo `.obj` precisa de servidor local. Use sempre `npm run dev`.
+
+## Arquivos principais
+
+- `index.html`
+- `src/styles.css`
+- `src/main.js`
+- `assets/models/duck.obj`

@@ -1,6 +1,6 @@
 {
   "name": "duck-scroll-3d-poc",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -8,7 +8,10 @@
     "build": "vite build",
     "preview": "vite preview --host 0.0.0.0"
   },
-  "devDependencies": {
-    "vite": "latest"
-  }
+  "dependencies": {
+    "@vitejs/plugin-basic-ssl": "latest",
+    "vite": "latest",
+    "three": "latest"
+  },
+  "devDependencies": {}
 }
