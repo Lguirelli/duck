@@ -1,204 +1,112 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { SubdivisionModifier } from 'three/examples/jsm/modifiers/SubdivisionModifier.js';
 
-const MODEL_URL = './assets/models/duck.glb';
+const MODEL_URL = './assets/models/duck_original.glb'; // seu GLB original
 const canvas = document.getElementById('duckCanvas');
 
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x000000);
 
-const camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 0.01, 100);
-camera.position.set(0, 0, 4.8);
-camera.lookAt(0, 0, 0);
+const camera = new THREE.PerspectiveCamera(35, window.innerWidth/window.innerHeight, 0.01, 100);
+camera.position.set(0, 0.08, 4.4);
 
-const renderer = new THREE.WebGLRenderer({
-  canvas,
-  antialias: true,
-  alpha: false,
-  powerPreference: 'high-performance'
-});
-
+const renderer = new THREE.WebGLRenderer({canvas, antialias:true, alpha:false, powerPreference:'high-performance'});
 renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
-renderer.outputColorSpace = THREE.SRGBColorSpace;
-renderer.toneMapping = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = 1.05;
+renderer.setPixelRatio(Math.min(window.devicePixelRatio||1, 1.5));
 
-scene.add(new THREE.HemisphereLight(0xffffff, 0x111111, 1.7));
+const ambientLight = new THREE.AmbientLight(0xffffff, 1.4);
+scene.add(ambientLight);
 
-const keyLight = new THREE.DirectionalLight(0xffffff, 2.6);
-keyLight.position.set(4, 5, 6);
+const keyLight = new THREE.DirectionalLight(0xffffff, 2.5);
+keyLight.position.set(3.5, 4, 5);
 scene.add(keyLight);
 
-const fillLight = new THREE.DirectionalLight(0xffffff, 1.0);
-fillLight.position.set(-4, 2, 4);
+const fillLight = new THREE.DirectionalLight(0xffffff, 0.9);
+fillLight.position.set(-3,2,3);
 scene.add(fillLight);
 
-const rimLight = new THREE.DirectionalLight(0xffffff, 0.9);
-rimLight.position.set(0, 3, -5);
+const rimLight = new THREE.DirectionalLight(0xffffff, 0.8);
+rimLight.position.set(0,2,-4);
 scene.add(rimLight);
 
-function createRubberBumpTexture() {
-  const size = 256;
-  const textureCanvas = document.createElement('canvas');
-  textureCanvas.width = size;
-  textureCanvas.height = size;
-
-  const ctx = textureCanvas.getContext('2d');
-  const image = ctx.createImageData(size, size);
-  const data = image.data;
-
-  let seed = 42;
-  const random = () => {
-    seed = (seed * 1664525 + 1013904223) % 4294967296;
-    return seed / 4294967296;
-  };
-
-  for (let y = 0; y < size; y += 1) {
-    for (let x = 0; x < size; x += 1) {
-      const i = (y * size + x) * 4;
-      const grain = random() * 22;
-      const softWave = Math.sin(x * 0.06) * 4 + Math.cos(y * 0.055) * 4;
-      const value = Math.max(0, Math.min(255, 128 + grain + softWave));
-
-      data[i] = value;
-      data[i + 1] = value;
-      data[i + 2] = value;
-      data[i + 3] = 255;
-    }
-  }
-
-  ctx.putImageData(image, 0, 0);
-
-  const texture = new THREE.CanvasTexture(textureCanvas);
-  texture.wrapS = THREE.RepeatWrapping;
-  texture.wrapT = THREE.RepeatWrapping;
-  texture.repeat.set(8, 8);
-  texture.colorSpace = THREE.NoColorSpace;
-  return texture;
-}
-
-const duckMaterial = new THREE.MeshPhysicalMaterial({
-  color: 0xffd100,
-  roughness: 0.76,
-  metalness: 0,
-  clearcoat: 0.12,
-  clearcoatRoughness: 0.8,
-  bumpMap: createRubberBumpTexture(),
-  bumpScale: 0.012
+const duckMaterial = new THREE.MeshStandardMaterial({
+    color: 0xffd100,
+    roughness: 0.7,
+    metalness: 0
 });
-
-duckMaterial.flatShading = false;
 
 const duck = new THREE.Group();
 scene.add(duck);
 
 let targetRotation = 0;
 let currentRotation = 0;
-let targetFloat = 0;
-let model = null;
-
-function centerAndFitObject(object) {
-  object.updateMatrixWorld(true);
-
-  const firstBox = new THREE.Box3().setFromObject(object);
-  const firstCenter = firstBox.getCenter(new THREE.Vector3());
-  object.position.sub(firstCenter);
-  object.updateMatrixWorld(true);
-
-  const secondBox = new THREE.Box3().setFromObject(object);
-  const size = secondBox.getSize(new THREE.Vector3());
-  const maxDimension = Math.max(size.x, size.y, size.z);
-
-  const targetSize = window.innerWidth < 760 ? 1.55 : 2.05;
-  const scale = maxDimension > 0 ? targetSize / maxDimension : 1;
-  object.scale.multiplyScalar(scale);
-  object.updateMatrixWorld(true);
-
-  const finalBox = new THREE.Box3().setFromObject(object);
-  const finalCenter = finalBox.getCenter(new THREE.Vector3());
-  object.position.sub(finalCenter);
-  object.updateMatrixWorld(true);
-}
+let modelLoaded = false;
 
 const loader = new GLTFLoader();
+loader.load(MODEL_URL, (gltf)=>{
+    const model = gltf.scene;
 
-loader.load(
-  MODEL_URL,
-  (gltf) => {
-    model = gltf.scene;
+    model.traverse((node)=>{
+        if(!node.isMesh) return;
 
-    model.traverse((node) => {
-      if (!node.isMesh) return;
+        // Aplica suavização de geometria
+        const modifier = new SubdivisionModifier(1); // 1-2 níveis para suavizar
+        node.geometry = modifier.modify(node.geometry);
 
-      if (node.geometry) {
-        node.geometry.deleteAttribute('normal');
-        node.geometry.computeVertexNormals();
-        node.geometry.computeBoundingBox();
-        node.geometry.computeBoundingSphere();
-      }
-
-      node.material = duckMaterial;
-      node.castShadow = false;
-      node.receiveShadow = false;
-      node.frustumCulled = true;
+        node.material = duckMaterial;
+        node.castShadow = false;
+        node.receiveShadow = false;
+        node.frustumCulled = false;
     });
 
-    model.rotation.set(0, 0, 0);
-    model.position.set(0, 0, 0);
-    model.scale.set(1, 1, 1);
+    // Centralizar
+    const box = new THREE.Box3().setFromObject(model);
+    const center = new THREE.Vector3();
+    box.getCenter(center);
+    model.position.sub(center);
+
+    // Escala
+    const size = new THREE.Vector3();
+    box.getSize(size);
+    const maxDim = Math.max(size.x, size.y, size.z);
+    const scale = maxDim > 0 ? 2.45 / maxDim : 1;
+    model.scale.setScalar(scale);
+
+    // Ajuste inicial de rotação
+    model.rotation.x = Math.PI/2;
+    model.rotation.y = 0;
+    model.rotation.z = 0;
 
     duck.add(model);
-    centerAndFitObject(model);
-    updateScrollValues();
-  },
-  undefined,
-  (error) => {
-    console.error('Erro ao carregar o duck.glb:', error);
-  }
-);
+    modelLoaded = true;
+}, undefined, (err)=>console.error(err));
 
-function getScrollProgress() {
-  const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-  return maxScroll > 0 ? window.scrollY / maxScroll : 0;
+function getScrollProgress(){
+    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+    return maxScroll>0 ? window.scrollY / maxScroll : 0;
 }
 
-function updateScrollValues() {
-  const progress = getScrollProgress();
-  targetRotation = progress * Math.PI * 2;
-  targetFloat = Math.sin(progress * Math.PI * 2) * 0.035;
+function updateScrollValues(){
+    targetRotation = getScrollProgress()*Math.PI*2; // 360º
 }
 
-window.addEventListener('scroll', updateScrollValues, { passive: true });
+window.addEventListener('scroll', updateScrollValues, {passive:true});
 updateScrollValues();
 
-function resize() {
-  const width = window.innerWidth;
-  const height = window.innerHeight;
-
-  camera.aspect = width / height;
-  camera.updateProjectionMatrix();
-
-  renderer.setSize(width, height);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
-
-  if (model) {
-    model.position.set(0, 0, 0);
-    model.scale.set(1, 1, 1);
-    centerAndFitObject(model);
-  }
+function resize(){
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,1.5));
 }
-
 window.addEventListener('resize', resize);
 
-function animate() {
-  requestAnimationFrame(animate);
-
-  currentRotation += (targetRotation - currentRotation) * 0.08;
-  duck.rotation.y = currentRotation;
-  duck.position.y += (targetFloat - duck.position.y) * 0.055;
-
-  renderer.render(scene, camera);
+function animate(){
+    requestAnimationFrame(animate);
+    currentRotation += (targetRotation - currentRotation)*0.075;
+    duck.rotation.y = currentRotation;
+    renderer.render(scene, camera);
 }
 
 animate();
