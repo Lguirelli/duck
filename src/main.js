@@ -5,10 +5,18 @@ import { mergeVertices } from 'three/addons/utils/BufferGeometryUtils.js';
 const MODEL_URL = './assets/models/duck.glb';
 const canvas = document.getElementById('duckCanvas');
 
+const DUCK_VERTICAL_OFFSET = 0.42;
+const CAMERA_PADDING = 1.28;
+
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x000000);
 
-const camera = new THREE.PerspectiveCamera(34, window.innerWidth / window.innerHeight, 0.01, 1000);
+const camera = new THREE.PerspectiveCamera(
+  34,
+  window.innerWidth / window.innerHeight,
+  0.01,
+  1000
+);
 
 const renderer = new THREE.WebGLRenderer({
   canvas,
@@ -40,6 +48,7 @@ scene.add(rimLight);
 function createRubberNoiseTexture() {
   const size = 128;
   const textureCanvas = document.createElement('canvas');
+
   textureCanvas.width = size;
   textureCanvas.height = size;
 
@@ -48,6 +57,7 @@ function createRubberNoiseTexture() {
 
   for (let i = 0; i < image.data.length; i += 4) {
     const v = 120 + Math.random() * 22;
+
     image.data[i] = v;
     image.data[i + 1] = v;
     image.data[i + 2] = v;
@@ -85,7 +95,9 @@ let currentRotation = -Math.PI / 2;
 
 function getScrollProgress() {
   const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+
   if (maxScroll <= 0) return 0;
+
   return THREE.MathUtils.clamp(window.scrollY / maxScroll, 0, 1);
 }
 
@@ -117,19 +129,23 @@ function centerAndScaleModel(object) {
 
   const initialBox = new THREE.Box3().setFromObject(object);
   const center = new THREE.Vector3();
+
   initialBox.getCenter(center);
 
   object.position.x -= center.x;
   object.position.y -= center.y;
   object.position.z -= center.z;
+
   object.updateMatrixWorld(true);
 
   const box = new THREE.Box3().setFromObject(object);
   const size = new THREE.Vector3();
+
   box.getSize(size);
 
   const maxDimension = Math.max(size.x, size.y, size.z);
   const scale = maxDimension > 0 ? 2.25 / maxDimension : 1;
+
   object.scale.setScalar(scale);
   object.updateMatrixWorld(true);
 }
@@ -137,11 +153,15 @@ function centerAndScaleModel(object) {
 function frameDuck() {
   if (!model) return;
 
+  duck.position.y = DUCK_VERTICAL_OFFSET;
   duck.updateMatrixWorld(true);
 
   const box = new THREE.Box3().setFromObject(duck);
   const size = new THREE.Vector3();
+  const center = new THREE.Vector3();
+
   box.getSize(size);
+  box.getCenter(center);
 
   const aspect = window.innerWidth / window.innerHeight;
   const verticalFov = THREE.MathUtils.degToRad(camera.fov);
@@ -149,12 +169,12 @@ function frameDuck() {
 
   const distanceByHeight = size.y / (2 * Math.tan(verticalFov / 2));
   const distanceByWidth = size.x / (2 * Math.tan(horizontalFov / 2));
-  const distance = Math.max(distanceByHeight, distanceByWidth) * 1.55;
+  const distance = Math.max(distanceByHeight, distanceByWidth) * CAMERA_PADDING;
 
-  camera.position.set(0, 0, Math.max(distance, 3.2));
+  camera.position.set(0, DUCK_VERTICAL_OFFSET * 0.35, Math.max(distance, 3.2));
   camera.near = 0.01;
   camera.far = Math.max(100, distance * 20);
-  camera.lookAt(0, 0, 0);
+  camera.lookAt(0, DUCK_VERTICAL_OFFSET * 0.28, 0);
   camera.updateProjectionMatrix();
 }
 
@@ -176,10 +196,13 @@ new GLTFLoader().load(
     model.rotation.set(0, 0, 0);
 
     duck.add(model);
+
     centerAndScaleModel(model);
     updateScrollValues();
+
     duck.rotation.y = targetRotation;
     currentRotation = targetRotation;
+
     frameDuck();
   },
   undefined,
