@@ -5,14 +5,14 @@
 html,
 body {
   width: 100%;
-  min-height: 360vh;
+  min-height: 320vh;
   margin: 0;
   background: #000;
   overflow-x: hidden;
 }
 
 body {
-  overscroll-behavior: none;
+  overscroll-behavior-y: none;
 }
 
 #duckCanvas {
