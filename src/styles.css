@@ -5,7 +5,7 @@
 html,
 body {
   width: 100%;
-  min-height: 320vh;
+  min-height: 360vh;
   margin: 0;
   background: #000;
   overflow-x: hidden;
