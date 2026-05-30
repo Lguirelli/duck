@@ -2115,3 +2115,89 @@ h3.editable-text {
     max-width: 100%;
   }
 }
+
+/* =========================
+   MODE BUTTON AND STATIC LANDING BUTTONS FIX
+========================= */
+
+.editor-panel .theme-switch {
+  display: none !important;
+}
+
+.editor-panel .theme-toggle-button {
+  width: 100%;
+  min-height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 12px;
+  border: 1px solid rgba(255, 255, 255, .16);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .06);
+  color: #f5f7fb;
+  font-weight: 800;
+  cursor: pointer;
+  user-select: none;
+  touch-action: manipulation;
+  transition: none !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.editor-panel .theme-toggle-button:hover,
+.editor-panel .theme-toggle-button:active {
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.editor-panel .theme-toggle-button:focus-visible {
+  outline: 2px solid #ffd84d;
+  outline-offset: 3px;
+}
+
+.editor-panel .theme-toggle-dot {
+  width: 24px;
+  height: 24px;
+  flex: 0 0 24px;
+  border-radius: 999px;
+  background: #ffd84d;
+  box-shadow: 0 0 18px rgba(255, 216, 77, .3);
+}
+
+.editor-panel .theme-toggle-button[aria-pressed="true"] .theme-toggle-dot {
+  background: #f5f7fb;
+  box-shadow: 0 0 18px rgba(245, 247, 251, .24);
+}
+
+.editable-main .btn,
+.site-header .btn,
+.site-footer .btn {
+  pointer-events: auto;
+  cursor: text !important;
+  transition: none !important;
+  transform: none !important;
+  box-shadow: none !important;
+  filter: none !important;
+}
+
+.editable-main .btn:hover,
+.editable-main .btn:active,
+.editable-main .btn:focus,
+.site-header .btn:hover,
+.site-header .btn:active,
+.site-header .btn:focus,
+.site-footer .btn:hover,
+.site-footer .btn:active,
+.site-footer .btn:focus {
+  transform: none !important;
+  box-shadow: none !important;
+  filter: none !important;
+  translate: none !important;
+}
+
+.editor-panel button,
+.editor-panel input,
+.editor-panel label {
+  pointer-events: auto;
+}

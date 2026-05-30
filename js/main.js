@@ -95,46 +95,20 @@ function initThemeToggle() {
 
   if (!toggle) return;
 
-  function applyTheme() {
-    const theme = toggle.checked ? "light" : "dark";
-    document.body.dataset.theme = theme;
-    if (label) label.textContent = theme === "light" ? "Claro" : "Escuro";
+  function setTheme(theme) {
+    const nextTheme = theme === "light" ? "light" : "dark";
+    document.body.dataset.theme = nextTheme;
+    toggle.setAttribute("aria-pressed", nextTheme === "light" ? "true" : "false");
+    if (label) label.textContent = nextTheme === "light" ? "Claro" : "Escuro";
   }
 
-  toggle.addEventListener("change", applyTheme);
+  toggle.addEventListener("click", (event) => {
+    event.preventDefault();
+    const currentTheme = document.body.dataset.theme === "light" ? "light" : "dark";
+    setTheme(currentTheme === "light" ? "dark" : "light");
+  });
 
-  const switchTrack = document.querySelector(".theme-switch-track");
-  if (switchTrack) {
-    let isDragging = false;
-
-    const updateFromPointer = (event) => {
-      const rect = switchTrack.getBoundingClientRect();
-      const clientX = event.touches?.[0]?.clientX ?? event.clientX;
-      toggle.checked = clientX > rect.left + rect.width / 2;
-      applyTheme();
-    };
-
-    switchTrack.addEventListener("pointerdown", (event) => {
-      isDragging = true;
-      switchTrack.setPointerCapture(event.pointerId);
-      updateFromPointer(event);
-    });
-
-    switchTrack.addEventListener("pointermove", (event) => {
-      if (!isDragging) return;
-      updateFromPointer(event);
-    });
-
-    switchTrack.addEventListener("pointerup", () => {
-      isDragging = false;
-    });
-
-    switchTrack.addEventListener("pointercancel", () => {
-      isDragging = false;
-    });
-  }
-
-  applyTheme();
+  setTheme(document.body.dataset.theme || "dark");
 }
 
 function initResetButton() {
@@ -152,7 +126,7 @@ function initResetButton() {
 
     const themeToggle = document.querySelector("#themeToggle");
     const themeLabel = document.querySelector("[data-theme-label]");
-    if (themeToggle) themeToggle.checked = false;
+    if (themeToggle) themeToggle.setAttribute("aria-pressed", "false");
     if (themeLabel) themeLabel.textContent = "Escuro";
 
     document.querySelectorAll("[data-section-toggle]").forEach((toggle) => {
@@ -167,7 +141,8 @@ function initResetButton() {
 }
 
 function initStaticButtons() {
-  document.querySelectorAll(".btn").forEach((button) => {
+  document.querySelectorAll(".editable-main .btn, .site-header .btn, .site-footer .btn").forEach((button) => {
+    button.removeAttribute("href");
     button.addEventListener("click", (event) => {
       event.preventDefault();
       event.stopPropagation();
