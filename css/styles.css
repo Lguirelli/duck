@@ -2544,3 +2544,191 @@ body[data-theme="dark"] .editor-panel {
   text-align: left !important;
   pointer-events: none !important;
 }
+
+
+/* =========================
+   PATCH: EDITOR ISOLADO + SEM HIFENIZAÇÃO
+========================= */
+
+/* Evita quebra de palavras em sílabas nos textos da landing. */
+.editable-main,
+.editable-main *,
+.site-header,
+.site-header *,
+.site-footer,
+.site-footer * {
+  hyphens: none !important;
+  -webkit-hyphens: none !important;
+  -ms-hyphens: none !important;
+  word-break: normal !important;
+  overflow-wrap: break-word !important;
+}
+
+.editable-main h1,
+.editable-main h2,
+.editable-main h3,
+.editable-main h4,
+.editable-main h5,
+.editable-main h6,
+.hero-title,
+.section-title,
+.card h3,
+.service-slide h3 {
+  word-break: normal !important;
+  overflow-wrap: normal !important;
+  hyphens: none !important;
+  -webkit-hyphens: none !important;
+  text-wrap: balance;
+}
+
+.editable-main p,
+.editable-main span,
+.editable-main li,
+.editable-main .editable-text,
+.editable-main .btn,
+.site-header .editable-text,
+.site-footer .editable-text {
+  word-break: normal !important;
+  overflow-wrap: break-word !important;
+  hyphens: none !important;
+  -webkit-hyphens: none !important;
+}
+
+/* Mantém a landing adaptável quando o texto editado crescer. */
+.editable-main section,
+.editable-main .section,
+.editable-main .hero,
+.editable-main .card,
+.editable-main .service-slide,
+.editable-main .placeholder,
+.editable-main .final-cta-box,
+.editable-main details {
+  height: auto !important;
+  min-height: max-content;
+  overflow: visible;
+}
+
+.editable-main .container,
+.editable-main .grid-2,
+.editable-main .grid-3,
+.editable-main .logo-strip,
+.editable-main .benefit-list,
+.editable-main .btn-row,
+.editable-main .hero-proof {
+  min-width: 0;
+}
+
+/* O painel do editor não deve ser afetado por modo claro/escuro nem pelas cores escolhidas. */
+.editor-panel,
+body[data-theme="light"] .editor-panel,
+body[data-theme="dark"] .editor-panel {
+  --editor-fixed-bg: #111318;
+  --editor-fixed-surface: #181b22;
+  --editor-fixed-surface-2: #22252d;
+  --editor-fixed-text: #f5f7fb;
+  --editor-fixed-muted: #aeb6c5;
+  --editor-fixed-line: rgba(255, 255, 255, .14);
+  --editor-fixed-accent: #ffd84d;
+  background: var(--editor-fixed-bg) !important;
+  color: var(--editor-fixed-text) !important;
+  border-right-color: var(--editor-fixed-line) !important;
+  box-shadow: 18px 0 60px rgba(0, 0, 0, .36) !important;
+}
+
+.editor-panel *,
+body[data-theme="light"] .editor-panel *,
+body[data-theme="dark"] .editor-panel * {
+  color: var(--editor-fixed-text) !important;
+  text-shadow: none !important;
+  hyphens: none !important;
+  -webkit-hyphens: none !important;
+  word-break: normal !important;
+}
+
+.editor-panel .editor-group {
+  background: var(--editor-fixed-surface) !important;
+  border-color: var(--editor-fixed-line) !important;
+}
+
+.editor-panel .editor-group-title,
+.editor-panel .editor-label {
+  color: var(--editor-fixed-accent) !important;
+}
+
+.editor-panel .section-toggle,
+.editor-panel .color-control,
+.editor-panel .theme-switch-text {
+  color: var(--editor-fixed-text) !important;
+}
+
+.editor-panel .color-control span,
+.editor-panel .section-toggle {
+  color: var(--editor-fixed-muted) !important;
+}
+
+.editor-panel .theme-toggle-button {
+  width: auto !important;
+  min-height: 30px !important;
+  padding: 0 !important;
+  gap: 10px !important;
+  border: 0 !important;
+  background: transparent !important;
+  color: var(--editor-fixed-text) !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+.editor-panel .theme-toggle-track {
+  width: 44px !important;
+  height: 24px !important;
+  padding: 3px !important;
+  border-radius: 999px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  background: var(--editor-fixed-surface-2) !important;
+  border: 1px solid var(--editor-fixed-line) !important;
+  box-shadow: none !important;
+}
+
+.editor-panel .theme-toggle-dot {
+  position: static !important;
+  display: block !important;
+  width: 16px !important;
+  height: 16px !important;
+  border-radius: 999px !important;
+  background: #f5f7fb !important;
+  transform: translateX(0) !important;
+  transition: transform .18s ease, background .18s ease !important;
+  box-shadow: none !important;
+}
+
+.editor-panel .theme-toggle-button[aria-pressed="true"] .theme-toggle-track {
+  justify-content: flex-start !important;
+  background: rgba(255, 216, 77, .18) !important;
+  border-color: rgba(255, 216, 77, .65) !important;
+}
+
+.editor-panel .theme-toggle-button[aria-pressed="true"] .theme-toggle-dot {
+  transform: translateX(20px) !important;
+  background: var(--editor-fixed-accent) !important;
+}
+
+.editor-panel .theme-switch-text {
+  position: static !important;
+  min-width: 48px !important;
+  font-size: 12px !important;
+  font-weight: 800 !important;
+  text-align: left !important;
+  color: var(--editor-fixed-text) !important;
+}
+
+.editor-panel .editor-reset {
+  background: var(--editor-fixed-accent) !important;
+  color: #111111 !important;
+  border-color: var(--editor-fixed-accent) !important;
+}
+
+.editor-panel input[type="checkbox"] {
+  accent-color: var(--editor-fixed-accent) !important;
+}
