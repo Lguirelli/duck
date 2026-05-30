@@ -1860,3 +1860,101 @@ strong {
     grid-template-columns: 1fr auto;
   }
 }
+
+
+/* =========================
+   AJUSTE FINAL DO EDITOR E HEADER/FOOTER
+========================= */
+
+.editor-panel-header {
+  display: none !important;
+}
+
+.editor-panel {
+  background: rgba(9, 12, 16, .97) !important;
+  color: #f5f7fb !important;
+  border-right: 1px solid rgba(255, 255, 255, .12) !important;
+  box-shadow: 18px 0 60px rgba(0, 0, 0, .34) !important;
+}
+
+body[data-theme="light"] .editor-panel,
+body[data-theme="dark"] .editor-panel {
+  background: rgba(9, 12, 16, .97) !important;
+  color: #f5f7fb !important;
+}
+
+.editor-panel,
+.editor-panel *:not(input) {
+  color: #f5f7fb !important;
+}
+
+.editor-panel .editor-group {
+  background: rgba(255, 255, 255, .045) !important;
+  border-color: rgba(255, 255, 255, .12) !important;
+}
+
+.editor-panel .editor-group-title,
+.editor-panel .editor-label {
+  color: #ffd84d !important;
+}
+
+.editor-panel .section-toggle,
+.editor-panel .color-control,
+.editor-panel .theme-switch,
+.editor-panel .theme-switch-text {
+  color: #d6deea !important;
+}
+
+.editor-panel .section-toggle input {
+  accent-color: #ffd84d !important;
+}
+
+.editor-panel .color-control input[type="color"] {
+  border-color: rgba(255, 255, 255, .18) !important;
+  background: transparent !important;
+}
+
+.editor-panel .theme-switch-track {
+  background: #151a23 !important;
+  border-color: rgba(255, 255, 255, .18) !important;
+}
+
+.editor-panel .theme-switch-thumb {
+  background: #ffd84d !important;
+  box-shadow: 0 0 18px rgba(255, 216, 77, .42) !important;
+}
+
+.editor-panel .theme-switch input:checked + .theme-switch-track {
+  background: #f5f7fb !important;
+}
+
+.editor-panel .theme-switch input:checked + .theme-switch-track .theme-switch-thumb {
+  background: #090c10 !important;
+}
+
+.editor-panel .editor-reset {
+  background: #ffd84d !important;
+  border-color: #ffd84d !important;
+  color: #111111 !important;
+}
+
+.site-header {
+  background: color-mix(in srgb, var(--bg) 78%, #000000 22%) !important;
+  color: var(--text) !important;
+  border-bottom: 1px solid var(--line) !important;
+  backdrop-filter: blur(16px);
+}
+
+.site-footer {
+  background: color-mix(in srgb, var(--bg) 82%, #000000 18%) !important;
+  color: var(--muted) !important;
+  border-top: 1px solid var(--line) !important;
+}
+
+body[data-theme="light"] .site-header {
+  background: color-mix(in srgb, var(--bg) 84%, #000000 16%) !important;
+}
+
+body[data-theme="light"] .site-footer {
+  background: color-mix(in srgb, var(--bg) 88%, #000000 12%) !important;
+}
