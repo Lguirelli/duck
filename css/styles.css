@@ -3380,3 +3380,141 @@ body[data-theme="dark"] .editor-panel .editor-reset:hover {
     max-width: 100% !important;
   }
 }
+
+/* =========================
+   PATCH: SWITCH CLAMP + EDITOR BREAKPOINT
+========================= */
+
+/* O painel entra no modo compacto antes de apertar a landing page. */
+@media (max-width: 1180px) {
+  body {
+    padding-left: 0 !important;
+    margin-left: 0 !important;
+    overflow-x: hidden !important;
+  }
+
+  .editable-main,
+  .site-header,
+  .site-footer {
+    margin-left: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+  }
+
+  .editor-panel {
+    position: fixed !important;
+    left: 14px !important;
+    right: auto !important;
+    bottom: 14px !important;
+    top: auto !important;
+    width: auto !important;
+    height: auto !important;
+    min-width: 0 !important;
+    max-width: calc(100vw - 28px) !important;
+    padding: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    overflow: visible !important;
+    z-index: 999 !important;
+  }
+
+  .editor-panel .editor-group:not(:first-child),
+  .editor-panel .editor-reset {
+    display: none !important;
+  }
+
+  .editor-panel .editor-group:first-child {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 8px !important;
+    width: auto !important;
+    max-width: calc(100vw - 28px) !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    padding: 10px 12px !important;
+    border: 1px solid rgba(255, 255, 255, .14) !important;
+    border-radius: 16px !important;
+    background: #111318 !important;
+    box-shadow: none !important;
+    overflow: visible !important;
+  }
+
+  .mobile-editor-notice {
+    display: block !important;
+  }
+}
+
+/* Switch menor, com a bolinha sempre presa dentro do trilho em modo claro e escuro. */
+.editor-panel .theme-toggle-button,
+body[data-theme="light"] .editor-panel .theme-toggle-button,
+body[data-theme="dark"] .editor-panel .theme-toggle-button {
+  width: auto !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  min-height: 24px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 8px !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+  transform: none !important;
+}
+
+.editor-panel .theme-toggle-track,
+body[data-theme="light"] .editor-panel .theme-toggle-track,
+body[data-theme="dark"] .editor-panel .theme-toggle-track {
+  position: relative !important;
+  display: block !important;
+  width: 34px !important;
+  height: 18px !important;
+  min-width: 34px !important;
+  max-width: 34px !important;
+  flex: 0 0 34px !important;
+  padding: 0 !important;
+  border-radius: 999px !important;
+  background: #242832 !important;
+  border: 1px solid rgba(255, 216, 77, .75) !important;
+  box-shadow: none !important;
+  overflow: hidden !important;
+}
+
+.editor-panel .theme-toggle-dot,
+body[data-theme="light"] .editor-panel .theme-toggle-dot,
+body[data-theme="dark"] .editor-panel .theme-toggle-dot {
+  position: absolute !important;
+  top: 50% !important;
+  left: 2px !important;
+  width: 12px !important;
+  height: 12px !important;
+  border-radius: 999px !important;
+  background: #ffd84d !important;
+  box-shadow: none !important;
+  transform: translate3d(0, -50%, 0) !important;
+  transition: transform .14s ease !important;
+}
+
+.editor-panel .theme-toggle-button[aria-pressed="true"] .theme-toggle-dot,
+body[data-theme="light"] .editor-panel .theme-toggle-button[aria-pressed="true"] .theme-toggle-dot,
+body[data-theme="dark"] .editor-panel .theme-toggle-button[aria-pressed="true"] .theme-toggle-dot {
+  transform: translate3d(18px, -50%, 0) !important;
+}
+
+.editor-panel .theme-switch-text,
+body[data-theme="light"] .editor-panel .theme-switch-text,
+body[data-theme="dark"] .editor-panel .theme-switch-text {
+  min-width: 42px !important;
+  max-width: 70px !important;
+  flex: 0 1 auto !important;
+  font-size: 11px !important;
+  line-height: 1 !important;
+  color: #f5f7fb !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
