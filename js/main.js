@@ -26,6 +26,8 @@ function initEditableText() {
 
     item.addEventListener("dblclick", (event) => {
       event.preventDefault();
+      event.stopPropagation();
+
       item.setAttribute("contenteditable", "true");
       item.classList.add("is-editing");
       item.focus();
@@ -60,10 +62,13 @@ function initSectionControls() {
 
     if (!section) return;
 
-    toggle.addEventListener("change", () => {
+    function applyVisibility() {
       section.hidden = !toggle.checked;
       section.classList.toggle("is-section-hidden", !toggle.checked);
-    });
+    }
+
+    toggle.addEventListener("change", applyVisibility);
+    applyVisibility();
   });
 }
 
@@ -71,12 +76,14 @@ function initColorControls() {
   const colorInputs = document.querySelectorAll("[data-color-var]");
 
   colorInputs.forEach((input) => {
+    input.dataset.defaultValue = input.value;
+
     input.addEventListener("input", () => {
       const cssVar = input.dataset.colorVar;
-      document.documentElement.style.setProperty(cssVar, input.value);
+      document.body.style.setProperty(cssVar, input.value);
 
       if (cssVar === "--accent") {
-        document.documentElement.style.setProperty("--accent-2", input.value);
+        document.body.style.setProperty("--accent-2", input.value);
       }
     });
   });
@@ -95,6 +102,38 @@ function initThemeToggle() {
   }
 
   toggle.addEventListener("change", applyTheme);
+
+  const switchTrack = document.querySelector(".theme-switch-track");
+  if (switchTrack) {
+    let isDragging = false;
+
+    const updateFromPointer = (event) => {
+      const rect = switchTrack.getBoundingClientRect();
+      const clientX = event.touches?.[0]?.clientX ?? event.clientX;
+      toggle.checked = clientX > rect.left + rect.width / 2;
+      applyTheme();
+    };
+
+    switchTrack.addEventListener("pointerdown", (event) => {
+      isDragging = true;
+      switchTrack.setPointerCapture(event.pointerId);
+      updateFromPointer(event);
+    });
+
+    switchTrack.addEventListener("pointermove", (event) => {
+      if (!isDragging) return;
+      updateFromPointer(event);
+    });
+
+    switchTrack.addEventListener("pointerup", () => {
+      isDragging = false;
+    });
+
+    switchTrack.addEventListener("pointercancel", () => {
+      isDragging = false;
+    });
+  }
+
   applyTheme();
 }
 
@@ -104,12 +143,11 @@ function initResetButton() {
   if (!resetButton) return;
 
   resetButton.addEventListener("click", () => {
-    document.documentElement.removeAttribute("style");
+    document.body.removeAttribute("style");
     document.body.dataset.theme = "dark";
 
     document.querySelectorAll("[data-color-var]").forEach((input) => {
-      const initialValue = input.getAttribute("value");
-      if (initialValue) input.value = initialValue;
+      input.value = input.dataset.defaultValue || input.getAttribute("value") || input.value;
     });
 
     const themeToggle = document.querySelector("#themeToggle");

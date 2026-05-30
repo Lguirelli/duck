@@ -49,6 +49,14 @@
         <span>Texto</span>
         <input type="color" data-color-var="--text" value="#f5f7fb" />
       </label>
+      <label class="color-control">
+        <span>Header</span>
+        <input type="color" data-color-var="--header-bg" value="#090c10" />
+      </label>
+      <label class="color-control">
+        <span>Footer</span>
+        <input type="color" data-color-var="--footer-bg" value="#090c10" />
+      </label>
     </div>
 
     <div class="editor-group">
@@ -59,7 +67,11 @@
       <label class="section-toggle"><input type="checkbox" data-section-toggle="benefits" checked /> Benefícios</label>
       <label class="section-toggle"><input type="checkbox" data-section-toggle="services" checked /> Serviços</label>
       <label class="section-toggle"><input type="checkbox" data-section-toggle="how" checked /> Como funciona</label>
+      <label class="section-toggle"><input type="checkbox" data-section-toggle="features" checked /> Recursos</label>
+      <label class="section-toggle"><input type="checkbox" data-section-toggle="comparison" checked /> Comparação</label>
+      <label class="section-toggle"><input type="checkbox" data-section-toggle="case" checked /> Caso de uso</label>
       <label class="section-toggle"><input type="checkbox" data-section-toggle="proof" checked /> Provas</label>
+      <label class="section-toggle"><input type="checkbox" data-section-toggle="lead" checked /> Qualificação</label>
       <label class="section-toggle"><input type="checkbox" data-section-toggle="faq" checked /> FAQ</label>
       <label class="section-toggle"><input type="checkbox" data-section-toggle="cta" checked /> Chamada final</label>
     </div>
@@ -89,26 +101,26 @@
   <main id="main" class="editable-main">
     <section class="hero editable-section" id="hero" data-editable-section="hero">
       <div class="container grid-2">
-        <div>
+        <div class="section-copy">
           <span class="section-kicker editable-text">Apresentação principal</span>
-          <h1 class="hero-title editable-text">Título forte da sua landing page</h1>
-          <p class="hero-lead editable-text">Use esta área para explicar, em poucas linhas, o que sua solução faz, para quem ela serve e qual resultado ela promete entregar.</p>
+          <h1 class="hero-title editable-text">Título forte da landing page</h1>
+          <p class="hero-lead editable-text">Explique de forma clara o que é a oferta, para quem ela serve e qual transformação ela entrega.</p>
           <div class="btn-row">
             <a class="btn btn-accent editable-text" href="#lead">Quero começar</a>
             <a class="btn btn-secondary editable-text" href="#services">Ver serviços</a>
           </div>
-          <p class="microcopy editable-text">Texto curto de reforço: sem compromisso, resposta rápida ou benefício imediato.</p>
+          <p class="microcopy editable-text">Frase curta de reforço para reduzir dúvida e incentivar o próximo clique.</p>
           <div class="hero-proof" aria-label="Provas rápidas">
-            <span class="editable-text">★★★★★ Avaliação</span>
-            <span class="editable-text">+000 clientes</span>
-            <span class="editable-text">00% de resultado</span>
+            <span class="editable-text">★★★★★ Prova social</span>
+            <span class="editable-text">+000 atendimentos</span>
+            <span class="editable-text">00% de melhoria</span>
           </div>
         </div>
 
-        <div class="placeholder visual-card">
+        <div class="placeholder visual-card" aria-label="Placeholder visual não editável">
           <div>
-            <span class="section-kicker editable-text">Área visual principal</span>
-            <p class="editable-text">Use este box para mockup, imagem, vídeo, produto, print do sistema ou ilustração da solução.</p>
+            <span class="section-kicker">Área visual principal</span>
+            <p>Placeholder para imagem, mockup, vídeo, print, produto ou ilustração da solução.</p>
           </div>
         </div>
       </div>
@@ -118,12 +130,12 @@
       <div class="container">
         <span class="section-kicker editable-text">Confiança</span>
         <h2 class="section-title small-title editable-text">Espaço para marcas, parceiros ou clientes atendidos.</h2>
-        <div class="logo-strip">
-          <div class="logo-box editable-text">Logo 01</div>
-          <div class="logo-box editable-text">Logo 02</div>
-          <div class="logo-box editable-text">Logo 03</div>
-          <div class="logo-box editable-text">Logo 04</div>
-          <div class="logo-box editable-text">Logo 05</div>
+        <div class="logo-strip" aria-label="Placeholders de logos não editáveis">
+          <div class="logo-box">Logo 01</div>
+          <div class="logo-box">Logo 02</div>
+          <div class="logo-box">Logo 03</div>
+          <div class="logo-box">Logo 04</div>
+          <div class="logo-box">Logo 05</div>
         </div>
       </div>
     </section>
@@ -131,69 +143,69 @@
     <section class="section editable-section" id="problem" data-editable-section="problem">
       <div class="container grid-2">
         <div class="card card-soft">
-          <h3 class="editable-text">Problema do cliente</h3>
-          <p class="editable-text">Explique a dor principal que o visitante enfrenta hoje. Mostre o impacto do problema de forma simples e direta.</p>
+          <h3 class="editable-text">Resumo do problema</h3>
+          <p class="editable-text">Descreva a dor que o visitante enfrenta antes de encontrar a sua solução.</p>
         </div>
-        <div>
+        <div class="section-copy">
           <span class="section-kicker editable-text">Problema</span>
-          <h2 class="section-title editable-text">Mostre o que está travando o crescimento.</h2>
-          <p class="section-lead editable-text">Use esta seção para gerar identificação. Quanto mais claro for o problema, mais forte será a percepção de valor da solução.</p>
+          <h2 class="section-title editable-text">Mostre o que precisa ser resolvido.</h2>
+          <p class="section-lead editable-text">Use esta seção para gerar identificação e deixar claro por que a solução é necessária.</p>
         </div>
       </div>
     </section>
 
     <section class="section editable-section" id="benefits" data-editable-section="benefits">
       <div class="container grid-2">
-        <div>
+        <div class="section-copy">
           <span class="section-kicker editable-text">Benefícios</span>
-          <h2 class="section-title editable-text">Transforme características em ganhos reais.</h2>
-          <p class="section-lead editable-text">Explique o que muda na rotina do cliente depois que ele usa sua solução.</p>
+          <h2 class="section-title editable-text">Transforme a solução em ganhos claros.</h2>
+          <p class="section-lead editable-text">Explique o que melhora para o cliente depois que ele usa a oferta.</p>
         </div>
         <div class="benefit-list">
           <article class="card benefit-item">
             <div class="icon-placeholder">01</div>
             <div>
               <h3 class="editable-text">Benefício direto</h3>
-              <p class="editable-text">Descreva uma vantagem clara, como economia de tempo, redução de erros ou aumento de vendas.</p>
+              <p class="editable-text">Descreva um ganho objetivo, como tempo, organização, vendas ou redução de erros.</p>
             </div>
           </article>
           <article class="card benefit-item">
             <div class="icon-placeholder">02</div>
             <div>
               <h3 class="editable-text">Benefício operacional</h3>
-              <p class="editable-text">Mostre como a solução simplifica processos e deixa a operação mais organizada.</p>
+              <p class="editable-text">Mostre como a solução simplifica o processo ou melhora a rotina.</p>
             </div>
           </article>
           <article class="card benefit-item">
             <div class="icon-placeholder">03</div>
             <div>
               <h3 class="editable-text">Benefício estratégico</h3>
-              <p class="editable-text">Mostre o impacto no crescimento, na tomada de decisão ou na experiência do cliente.</p>
+              <p class="editable-text">Mostre impacto em crescimento, decisão, atendimento ou experiência.</p>
             </div>
           </article>
         </div>
       </div>
     </section>
 
-    <section class="section editable-section services-carousel-section" id="services" data-editable-section="services">
+    <section class="section editable-section" id="services" data-editable-section="services">
       <div class="container">
         <span class="section-kicker editable-text">Serviços</span>
-        <h2 class="section-title editable-text">Soluções que podem ser adaptadas ao seu negócio.</h2>
-        <p class="section-lead editable-text">Use esta área para listar produtos, pacotes, serviços ou módulos da sua oferta.</p>
+        <h2 class="section-title editable-text">Liste as principais ofertas da página.</h2>
+        <p class="section-lead editable-text">Use esta área para organizar produtos, pacotes, serviços ou módulos.</p>
         <div class="grid-3 service-grid-static">
           <article class="card">
             <div class="icon-placeholder">01</div>
-            <h3 class="editable-text">Serviço principal</h3>
-            <p class="editable-text">Explique o serviço mais importante, o problema que ele resolve e o resultado esperado.</p>
+            <h3 class="editable-text">Oferta principal</h3>
+            <p class="editable-text">Explique o serviço central, o problema que resolve e o resultado esperado.</p>
           </article>
           <article class="card">
             <div class="icon-placeholder">02</div>
-            <h3 class="editable-text">Serviço complementar</h3>
+            <h3 class="editable-text">Oferta complementar</h3>
             <p class="editable-text">Mostre uma solução adicional que aumenta o valor da oferta principal.</p>
           </article>
           <article class="card">
             <div class="icon-placeholder">03</div>
-            <h3 class="editable-text">Serviço avançado</h3>
+            <h3 class="editable-text">Oferta avançada</h3>
             <p class="editable-text">Use este espaço para uma entrega premium, personalizada ou estratégica.</p>
           </article>
         </div>
@@ -204,44 +216,118 @@
       <div class="container">
         <span class="section-kicker editable-text">Como funciona</span>
         <h2 class="section-title editable-text">Explique o processo em etapas simples.</h2>
-        <div class="grid-3">
+        <p class="section-lead editable-text">Mostre o caminho entre o primeiro contato e a entrega final.</p>
+        <div class="grid-3 service-grid-static">
           <article class="card">
             <span class="section-kicker">01</span>
-            <h3 class="editable-text">Diagnóstico</h3>
-            <p class="editable-text">Entenda o cenário, a necessidade e os objetivos do cliente.</p>
+            <h3 class="editable-text">Primeiro passo</h3>
+            <p class="editable-text">Explique o que acontece no início do processo.</p>
           </article>
           <article class="card">
             <span class="section-kicker">02</span>
-            <h3 class="editable-text">Construção</h3>
-            <p class="editable-text">Monte a solução, configure os recursos e valide a experiência.</p>
+            <h3 class="editable-text">Segundo passo</h3>
+            <p class="editable-text">Mostre como a solução é construída, configurada ou planejada.</p>
           </article>
           <article class="card">
             <span class="section-kicker">03</span>
-            <h3 class="editable-text">Entrega</h3>
-            <p class="editable-text">Publique, acompanhe os resultados e ajuste o que for necessário.</p>
+            <h3 class="editable-text">Terceiro passo</h3>
+            <p class="editable-text">Explique a entrega, validação, acompanhamento ou próximo ciclo.</p>
           </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section editable-section" id="features" data-editable-section="features">
+      <div class="container grid-2">
+        <div class="placeholder visual-card" aria-label="Placeholder de recurso não editável">
+          <div>
+            <span class="section-kicker">Área de recurso</span>
+            <p>Placeholder para imagem, diagrama, fluxo, print ou demonstração de funcionalidade.</p>
+          </div>
+        </div>
+        <div class="section-copy">
+          <span class="section-kicker editable-text">Recursos</span>
+          <h2 class="section-title editable-text">Destaque funcionalidades importantes.</h2>
+          <p class="section-lead editable-text">Explique os recursos que sustentam a promessa da página e ajudam o visitante a entender o valor.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section editable-section" id="comparison" data-editable-section="comparison">
+      <div class="container">
+        <span class="section-kicker editable-text">Comparação</span>
+        <h2 class="section-title editable-text">Compare o antes e o depois.</h2>
+        <p class="section-lead editable-text">Use esta seção para mostrar por que sua solução é melhor do que o cenário atual.</p>
+        <div class="comparison-grid">
+          <article class="card">
+            <h3 class="editable-text">Sem a solução</h3>
+            <p class="editable-text">Descreva a dificuldade, o retrabalho, a demora ou o custo do modelo atual.</p>
+          </article>
+          <article class="card featured-card">
+            <h3 class="editable-text">Com a solução</h3>
+            <p class="editable-text">Mostre o ganho de clareza, velocidade, organização, venda ou experiência.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section editable-section" id="case" data-editable-section="case">
+      <div class="container grid-2">
+        <div class="section-copy">
+          <span class="section-kicker editable-text">Caso de uso</span>
+          <h2 class="section-title editable-text">Mostre uma aplicação prática.</h2>
+          <p class="section-lead editable-text">Explique como a oferta pode funcionar em uma situação real, com contexto, ação e resultado.</p>
+        </div>
+        <div class="card">
+          <h3 class="editable-text">Exemplo de aplicação</h3>
+          <p class="editable-text">Use este card para resumir uma situação comum do cliente e o resultado gerado pela solução.</p>
         </div>
       </div>
     </section>
 
     <section class="section editable-section" id="proof" data-editable-section="proof">
       <div class="container grid-2">
-        <div>
+        <div class="section-copy">
           <span class="section-kicker editable-text">Provas</span>
-          <h2 class="section-title editable-text">Mostre evidências antes da chamada final.</h2>
-          <p class="section-lead editable-text">Adicione depoimentos, números, prints, resultados, estudos de caso ou garantias.</p>
+          <h2 class="section-title editable-text">Apresente evidências de confiança.</h2>
+          <p class="section-lead editable-text">Adicione depoimentos, números, resultados, prints, garantias ou estudos de caso.</p>
         </div>
         <div class="card">
           <h3 class="editable-text">Depoimento ou resultado</h3>
-          <p class="editable-text">“Este é um espaço para uma frase de cliente, um dado relevante ou uma história curta de transformação.”</p>
+          <p class="editable-text">Este espaço pode receber uma frase de cliente, um dado relevante ou uma história curta de transformação.</p>
         </div>
+      </div>
+    </section>
+
+    <section class="section editable-section" id="lead" data-editable-section="lead">
+      <div class="container grid-2">
+        <div class="section-copy">
+          <span class="section-kicker editable-text">Qualificação</span>
+          <h2 class="section-title editable-text">Prepare o visitante para o contato.</h2>
+          <p class="section-lead editable-text">Explique o que será analisado, respondido ou enviado depois que ele demonstrar interesse.</p>
+        </div>
+        <form class="card lead-form" aria-label="Formulário demonstrativo não funcional">
+          <label>
+            <span>Nome</span>
+            <input type="text" placeholder="Seu nome" />
+          </label>
+          <label>
+            <span>Contato</span>
+            <input type="text" placeholder="Email ou WhatsApp" />
+          </label>
+          <label>
+            <span>Mensagem</span>
+            <textarea rows="4" placeholder="Conte rapidamente o que você procura"></textarea>
+          </label>
+          <button class="btn btn-accent" type="button">Enviar interesse</button>
+        </form>
       </div>
     </section>
 
     <section class="section editable-section" id="faq" data-editable-section="faq">
       <div class="container">
         <span class="section-kicker editable-text">FAQ</span>
-        <h2 class="section-title editable-text">Perguntas frequentes</h2>
+        <h2 class="section-title editable-text">Responda dúvidas frequentes.</h2>
         <div class="faq-list">
           <details open>
             <summary class="editable-text">Para quem é essa solução?</summary>
@@ -279,7 +365,7 @@
           <span class="logo-mark"></span>
           <span class="editable-text">Marca</span>
         </a>
-        <p class="editable-text">Texto curto de rodapé para reforço da marca, contato ou posicionamento.</p>
+        <p class="editable-text">Texto curto de rodapé para reforçar posicionamento, contato ou promessa da marca.</p>
       </div>
       <div>
         <strong class="editable-text">Links</strong>
@@ -287,7 +373,7 @@
         <a href="#services">Serviços</a>
         <a href="#faq">FAQ</a>
       </div>
-      <div id="lead">
+      <div>
         <strong class="editable-text">Contato</strong>
         <p class="editable-text">email@exemplo.com</p>
         <p class="editable-text">WhatsApp ou canal de atendimento</p>
