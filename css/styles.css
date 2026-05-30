@@ -3259,3 +3259,124 @@ body[data-theme="dark"] .editor-panel .editor-reset:hover {
     grid-template-columns: 1fr !important;
   }
 }
+
+/* =========================
+   PATCH: LOGOS EM LINHA + SWITCH DENTRO DO LIMITE
+========================= */
+
+/* Containers de logos/cards podem ficar em linha quando houver espaço e quebram só quando necessário. */
+.logo-strip {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: stretch !important;
+  justify-content: center !important;
+  gap: clamp(12px, 2vw, 18px) !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin-inline: auto !important;
+}
+
+.logo-box {
+  flex: 1 1 150px !important;
+  width: auto !important;
+  min-width: 120px !important;
+  max-width: 190px !important;
+  min-height: 72px !important;
+  display: grid !important;
+  place-items: center !important;
+}
+
+.grid-3,
+.service-grid-static,
+.comparison-grid,
+.benefit-list {
+  align-items: stretch !important;
+}
+
+/* Garante respiro no box do botão de modo, sem estourar o painel. */
+.editor-panel .editor-group:first-child {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin-top: 8px !important;
+  margin-bottom: 12px !important;
+  padding: 10px 12px !important;
+  overflow: hidden !important;
+}
+
+.editor-panel .theme-toggle-button {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  overflow: hidden !important;
+}
+
+.editor-panel .theme-toggle-track {
+  position: relative !important;
+  width: 40px !important;
+  height: 22px !important;
+  min-width: 40px !important;
+  max-width: 40px !important;
+  flex: 0 0 40px !important;
+  padding: 0 !important;
+  border-radius: 999px !important;
+  overflow: hidden !important;
+  background: #242832 !important;
+  border: 1px solid rgba(255, 255, 255, .24) !important;
+  box-shadow: none !important;
+}
+
+.editor-panel .theme-toggle-dot {
+  position: absolute !important;
+  top: 50% !important;
+  left: 3px !important;
+  width: 16px !important;
+  height: 16px !important;
+  border-radius: 999px !important;
+  background: #ffd84d !important;
+  box-shadow: none !important;
+  transform: translate3d(0, -50%, 0) !important;
+  transition: transform .14s ease !important;
+}
+
+.editor-panel .theme-toggle-button[aria-pressed="true"] .theme-toggle-dot {
+  transform: translate3d(18px, -50%, 0) !important;
+}
+
+.editor-panel .theme-switch-text {
+  flex: 0 1 auto !important;
+  min-width: 0 !important;
+  max-width: calc(100% - 48px) !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+@media (max-width: 720px) {
+  .logo-strip {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+  }
+
+  .logo-box {
+    flex: 1 1 130px !important;
+    max-width: 180px !important;
+  }
+
+  .editor-panel .editor-group:first-child {
+    width: auto !important;
+    max-width: calc(100vw - 28px) !important;
+    margin-top: 8px !important;
+    margin-bottom: 8px !important;
+    padding: 8px 10px !important;
+  }
+
+  .editor-panel .theme-toggle-button {
+    width: auto !important;
+    max-width: 100% !important;
+  }
+}
