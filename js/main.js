@@ -24,7 +24,7 @@ function initEditableText() {
     item.setAttribute("tabindex", "0");
     item.setAttribute("title", "Dê dois cliques para editar");
 
-    item.addEventListener("dblclick", (event) => {
+    function startEditing(event) {
       event.preventDefault();
       event.stopPropagation();
 
@@ -37,7 +37,20 @@ function initEditableText() {
       range.selectNodeContents(item);
       selection.removeAllRanges();
       selection.addRange(range);
-    });
+    }
+
+    item.addEventListener("dblclick", startEditing);
+
+    let lastTapTime = 0;
+    item.addEventListener("touchend", (event) => {
+      const now = Date.now();
+
+      if (now - lastTapTime < 320) {
+        startEditing(event);
+      }
+
+      lastTapTime = now;
+    }, { passive: false });
 
     item.addEventListener("keydown", (event) => {
       if (event.key === "Escape" || (event.key === "Enter" && (event.ctrlKey || event.metaKey))) {
