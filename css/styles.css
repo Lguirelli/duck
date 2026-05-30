@@ -2732,3 +2732,152 @@ body[data-theme="dark"] .editor-panel * {
 .editor-panel input[type="checkbox"] {
   accent-color: var(--editor-fixed-accent) !important;
 }
+
+/* =========================
+   HEADER, FOOTER E SINCRONIA FINAL
+========================= */
+
+.site-header .header-inner {
+  width: min(100% - 32px, var(--max));
+  min-height: 76px;
+  display: grid !important;
+  grid-template-columns: minmax(160px, 1fr) auto minmax(220px, 1fr) !important;
+  align-items: center !important;
+  gap: clamp(16px, 3vw, 48px) !important;
+  margin-inline: auto !important;
+}
+
+.site-header .logo {
+  justify-self: start !important;
+  margin: 0 !important;
+  width: auto !important;
+}
+
+.site-header .nav {
+  justify-self: center !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: clamp(18px, 3vw, 34px) !important;
+  width: auto !important;
+  margin: 0 !important;
+}
+
+.site-header .header-actions {
+  justify-self: end !important;
+  display: flex !important;
+  justify-content: flex-end !important;
+  align-items: center !important;
+  gap: 12px !important;
+  margin: 0 !important;
+}
+
+.site-header .header-actions .btn {
+  width: auto !important;
+  min-width: 112px;
+  max-width: 220px;
+}
+
+.site-footer .footer-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  align-items: start !important;
+  justify-content: center !important;
+  gap: clamp(28px, 5vw, 72px) !important;
+  text-align: center !important;
+}
+
+.site-footer .footer-grid > div {
+  width: 100% !important;
+  display: grid !important;
+  justify-items: center !important;
+  align-content: start !important;
+  gap: 8px !important;
+  text-align: center !important;
+}
+
+.site-footer .logo {
+  justify-content: center !important;
+  margin-inline: auto !important;
+}
+
+.site-footer p,
+.site-footer a,
+.site-footer strong {
+  text-align: center !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+.editor-panel .editor-reset,
+.editor-panel .editor-reset:hover,
+.editor-panel .editor-reset:focus,
+.editor-panel .editor-reset:active {
+  background: #ffd84d !important;
+  border-color: #ffd84d !important;
+  color: #111111 !important;
+  box-shadow: none !important;
+  transform: none !important;
+  filter: none !important;
+}
+
+.editor-panel [data-section-menu-label-for],
+.site-header [data-nav-label-for],
+.site-footer [data-nav-label-for] {
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-break: normal;
+  hyphens: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+li,
+span,
+strong,
+small,
+.editable-text,
+.section-title,
+.hero-title,
+.section-lead,
+.hero-lead,
+.microcopy,
+.card p,
+.card h3,
+.logo-box,
+.btn {
+  word-break: normal !important;
+  overflow-wrap: break-word !important;
+  hyphens: none !important;
+}
+
+@media (max-width: 1100px) {
+  .site-header .header-inner {
+    grid-template-columns: 1fr !important;
+    justify-items: center !important;
+    gap: 14px !important;
+    padding-block: 14px;
+  }
+
+  .site-header .logo,
+  .site-header .nav,
+  .site-header .header-actions {
+    justify-self: center !important;
+  }
+}
+
+@media (max-width: 720px) {
+  .site-header .nav,
+  .site-header .header-actions {
+    flex-wrap: wrap !important;
+  }
+
+  .site-footer .footer-grid {
+    grid-template-columns: 1fr !important;
+  }
+}

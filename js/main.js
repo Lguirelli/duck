@@ -49,7 +49,35 @@ function initEditableText() {
     item.addEventListener("blur", () => {
       item.removeAttribute("contenteditable");
       item.classList.remove("is-editing");
+      syncAllSectionLabels();
     });
+  });
+}
+
+function getSectionDisplayName(sectionName) {
+  const section = document.querySelector(`[data-editable-section="${sectionName}"]`);
+  const kicker = section?.querySelector(".section-kicker.editable-text");
+  const title = section?.querySelector(".section-title.editable-text, .hero-title.editable-text");
+  const text = (kicker?.textContent || title?.textContent || "").trim();
+
+  return text || sectionName;
+}
+
+function syncSectionLabels(sectionName) {
+  const label = getSectionDisplayName(sectionName);
+
+  document.querySelectorAll(`[data-section-menu-label-for="${sectionName}"]`).forEach((item) => {
+    item.textContent = label;
+  });
+
+  document.querySelectorAll(`[data-nav-label-for="${sectionName}"]`).forEach((item) => {
+    item.textContent = label;
+  });
+}
+
+function syncAllSectionLabels() {
+  document.querySelectorAll("[data-editable-section]").forEach((section) => {
+    syncSectionLabels(section.dataset.editableSection);
   });
 }
 
@@ -70,6 +98,8 @@ function initSectionControls() {
     toggle.addEventListener("change", applyVisibility);
     applyVisibility();
   });
+
+  syncAllSectionLabels();
 }
 
 function initColorControls() {
@@ -143,6 +173,8 @@ function initResetButton() {
         section.classList.remove("is-section-hidden");
       }
     });
+
+    syncAllSectionLabels();
   });
 }
 
@@ -164,6 +196,7 @@ function initEditableLandingPage() {
   initThemeToggle();
   initResetButton();
   initStaticButtons();
+  syncAllSectionLabels();
 }
 
 document.addEventListener("DOMContentLoaded", initEditableLandingPage);
