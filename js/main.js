@@ -166,6 +166,15 @@ function initResetButton() {
   });
 }
 
+function initStaticButtons() {
+  document.querySelectorAll(".btn").forEach((button) => {
+    button.addEventListener("click", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+    });
+  });
+}
+
 function initEditableLandingPage() {
   initSmoothScroll();
   initEditableText();
@@ -173,6 +182,7 @@ function initEditableLandingPage() {
   initColorControls();
   initThemeToggle();
   initResetButton();
+  initStaticButtons();
 }
 
 document.addEventListener("DOMContentLoaded", initEditableLandingPage);

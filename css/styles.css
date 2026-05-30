@@ -1958,3 +1958,160 @@ body[data-theme="light"] .site-header {
 body[data-theme="light"] .site-footer {
   background: color-mix(in srgb, var(--bg) 88%, #000000 12%) !important;
 }
+
+/* =========================
+   CORREÇÃO DE TEXTOS LONGOS E BOTÕES EDITÁVEIS
+========================= */
+
+html,
+body {
+  overflow-x: hidden;
+}
+
+.container,
+.grid-2,
+.grid-3,
+.section-copy,
+.card,
+.placeholder,
+.visual-card,
+.final-cta-box,
+.benefit-item,
+.service-grid-static,
+.logo-strip,
+.comparison-grid,
+.faq-list,
+.lead-form,
+.hero-proof,
+.btn-row {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.section,
+.hero,
+.card,
+.placeholder,
+.visual-card,
+.final-cta-box,
+.logo-box,
+.benefit-item,
+.service-grid-static > *,
+.comparison-grid > *,
+.faq-list > * {
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+li,
+span,
+strong,
+small,
+.editable-text,
+.section-title,
+.hero-title,
+.section-lead,
+.hero-lead,
+.microcopy,
+.card p,
+.card h3,
+.logo-box,
+.btn {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  hyphens: auto;
+}
+
+.editable-text {
+  min-width: 1ch;
+  white-space: normal;
+}
+
+.editable-text[contenteditable="true"] {
+  display: inline-block;
+  width: auto;
+  max-width: 100%;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.section-title.editable-text,
+.hero-title.editable-text,
+p.editable-text,
+h1.editable-text,
+h2.editable-text,
+h3.editable-text {
+  display: block;
+  width: 100%;
+}
+
+.btn-row {
+  width: 100%;
+  align-items: stretch !important;
+  justify-content: center !important;
+}
+
+.btn {
+  width: auto;
+  max-width: min(100%, 360px);
+  height: auto !important;
+  min-height: 52px;
+  white-space: normal !important;
+  text-align: center !important;
+  line-height: 1.2;
+  cursor: default;
+}
+
+.btn .editable-text {
+  display: inline-block;
+  max-width: 100%;
+  min-width: 1ch;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  text-align: center !important;
+}
+
+.btn:hover {
+  transform: none !important;
+}
+
+.header-actions {
+  align-items: stretch !important;
+}
+
+.header-actions .btn {
+  min-height: 44px;
+  max-width: 220px;
+}
+
+.card,
+.visual-card,
+.final-cta-box {
+  align-self: stretch;
+}
+
+.card p,
+.card h3,
+.visual-card p,
+.final-cta-box p {
+  width: 100%;
+}
+
+@media (max-width: 720px) {
+  .btn,
+  .header-actions .btn {
+    width: 100%;
+    max-width: 100%;
+  }
+}
