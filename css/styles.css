@@ -1181,52 +1181,12 @@ details p {
 }
 
 /* =========================
-   HERO 3D DUCK ROBUSTO
+   FLOATING DUCK 3D
 ========================= */
-
-body {
-  overflow-x: hidden;
-}
 
 main {
   position: relative;
-  z-index: 5;
   isolation: isolate;
-}
-
-#duck-3d-layer {
-  position: fixed;
-  inset: 0;
-  z-index: 3;
-  pointer-events: none;
-  overflow: hidden;
-  contain: layout paint style;
-}
-
-#duck-3d-model {
-  position: fixed;
-  left: 0;
-  top: 0;
-  display: block;
-  opacity: 0;
-  filter:
-    drop-shadow(0 34px 48px rgba(0, 0, 0, .48))
-    drop-shadow(0 0 34px rgba(255, 216, 77, .18));
-  transition: opacity .35s ease;
-  will-change: transform, opacity;
-  --poster-color: transparent;
-  --progress-bar-color: transparent;
-  --progress-bar-height: 0px;
-}
-
-#duck-3d-model.is-loaded {
-  opacity: 1;
-}
-
-#duck-3d-canvas {
-  width: 100%;
-  height: 100%;
-  display: block;
 }
 
 .hero,
@@ -1237,81 +1197,79 @@ main {
 }
 
 .hero-copy,
-.problem-card,
+.problem-anchor-copy,
 .problem-copy {
   position: relative;
-  z-index: 20;
+  z-index: 2;
 }
 
-.hero-visual-anchor {
+.hero-grid,
+.problem-grid {
+  align-items: center;
+}
+
+.duck-space {
+  min-height: 360px;
+}
+
+.duck-space-start {
   position: relative;
-  z-index: 8;
-  min-height: 320px;
-  border-radius: var(--radius);
-  background:
-    radial-gradient(circle at 50% 52%, rgba(255, 216, 77, .18), transparent 42%),
-    radial-gradient(circle at 50% 48%, rgba(255, 255, 255, .08), transparent 34%),
-    linear-gradient(135deg, rgba(255, 216, 77, .05), transparent 52%),
-    linear-gradient(315deg, rgba(100, 149, 237, .09), transparent 52%);
-  border: 1px dashed rgba(255, 255, 255, .16);
-  overflow: hidden;
 }
 
-.hero-visual-anchor::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: rgba(12, 16, 23, .24);
-  backdrop-filter: blur(2px);
+.problem-anchor-copy {
+  min-height: 160px;
+  padding: 10px 0;
 }
 
-.hero-visual-glow {
-  position: absolute;
-  inset: 8% 12%;
-  border-radius: 999px;
-  background:
-    radial-gradient(circle, rgba(255, 216, 77, .20), transparent 58%),
-    radial-gradient(circle at 50% 60%, rgba(122, 162, 255, .20), transparent 52%);
-  filter: blur(24px);
-  opacity: .85;
+.problem-anchor-copy h3,
+.problem-anchor-copy p {
+  max-width: 520px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.problem-card {
-  min-height: 164px;
+#duck-float {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 360px;
+  height: 360px;
+  pointer-events: none;
+  z-index: 1;
+  transform: translate3d(0, 0, 0);
+  will-change: transform, width, height;
 }
 
-.problem-card,
-.hero-copy,
-.problem-copy {
-  transform: translateZ(0);
+#duck-float-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+@media (max-width: 1100px) {
+  .duck-space {
+    min-height: 320px;
+  }
 }
 
 @media (max-width: 900px) {
-  .hero-visual-anchor {
-    min-height: 280px;
+  .duck-space {
+    min-height: 260px;
+  }
+
+  .problem-anchor-copy {
+    min-height: 0;
   }
 }
 
 @media (max-width: 720px) {
-  #duck-3d-layer {
-    z-index: 3;
-    opacity: .95;
+  #duck-float {
+    width: 240px;
+    height: 240px;
+    opacity: .98;
   }
 
-  .hero-copy,
-  .problem-card,
-  .problem-copy {
-    z-index: 25;
-  }
-
-  .hero-visual-anchor {
-    min-height: 240px;
-  }
-
-  #duck-3d-model {
-    filter:
-      drop-shadow(0 24px 36px rgba(0, 0, 0, .48))
-      drop-shadow(0 0 24px rgba(255, 216, 77, .16));
+  .duck-space {
+    min-height: 180px;
   }
 }
