@@ -1,271 +1,223 @@
 import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js";
 import { GLTFLoader } from "https://cdn.jsdelivr.net/npm/three@0.165.0/examples/jsm/loaders/GLTFLoader.js";
 
-const SELECTORS = {
+const DUCK = {
+  modelUrl: new URL("../assets/models/duck.glb", import.meta.url).href,
+  color: 0xffd84d,
+  emissive: 0xd59600,
+  startAnchor: "#duck-start-anchor",
+  endAnchor: "#duck-end-anchor",
+  startTarget: "#hero-copy",
+  endTarget: "#problem-copy",
   heroSection: "#hero",
   problemSection: "#problem",
-  startAnchor: "#hero-duck-start",
-  endAnchor: "#problem-duck-end",
-  startTarget: "#hero-copy",
-  endTarget: "#problem-copy"
+  startSize: 330,
+  endSize: 260,
+  startAnchorPoint: { x: 0.48, y: 0.5 },
+  endAnchorPoint: { x: 0.5, y: 0.52 },
+  startTargetPoint: { x: 0.72, y: 0.34 },
+  endTargetPoint: { x: 0.18, y: 0.35 },
+  normalizedModelSize: 2.55,
+  baseRotationX: -0.34,
+  baseRotationY: 0.2,
+  baseRotationZ: 0,
+  beakAngleOffset: 0
 };
 
-const TUNING = {
-  startAnchorOffset: { x: 0.52, y: 0.48 },
-  endAnchorOffset: { x: 0.44, y: 0.56 },
-  startTargetOffset: { x: 0.72, y: 0.28 },
-  endTargetOffset: { x: 0.18, y: 0.34 },
-  duckScale: 1.12,
-  viewportMinScale: 0.62,
-  viewportMaxScale: 1,
-  floatX: 0.016,
-  floatY: 0.028,
-  floatSpeedX: 0.95,
-  floatSpeedY: 1.35,
-  startViewportWidth: 360,
-  endViewportWidth: 280,
-  startScrollInset: 0.1,
-  endScrollInset: 0.82,
-  modelColor: 0xffd84d,
-  emissiveColor: 0xb88700,
-  baseTiltX: 0.08,
-  baseTiltZ: -0.05
-};
+let initialized = false;
 
-let isInitialized = false;
+const clamp = (value, min = 0, max = 1) => Math.min(max, Math.max(min, value));
+const lerp = (a, b, t) => a + (b - a) * t;
+const ease = (t) => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 
-function clamp(value, min = 0, max = 1) {
-  return Math.min(max, Math.max(min, value));
-}
-
-function easeInOutCubic(value) {
-  return value < 0.5
-    ? 4 * value * value * value
-    : 1 - Math.pow(-2 * value + 2, 3) / 2;
-}
-
-function lerp(a, b, t) {
-  return a + (b - a) * t;
-}
-
-function getRectPoint(element, offsetX = 0.5, offsetY = 0.5) {
+function pointFromElement(element, point) {
   const rect = element.getBoundingClientRect();
   return {
-    x: rect.left + rect.width * offsetX,
-    y: rect.top + rect.height * offsetY,
-    rect
+    x: rect.left + rect.width * point.x,
+    y: rect.top + rect.height * point.y
   };
 }
 
-function createDuckElement() {
-  const existing = document.getElementById("duck-float");
-  if (existing) return existing;
+function makeDuckShell() {
+  let shell = document.getElementById("duck-3d-float");
 
-  const duck = document.createElement("div");
-  duck.id = "duck-float";
-  duck.setAttribute("aria-hidden", "true");
-  duck.innerHTML = '<canvas id="duck-float-canvas"></canvas>';
-  document.body.appendChild(duck);
-  return duck;
+  if (!shell) {
+    shell = document.createElement("div");
+    shell.id = "duck-3d-float";
+    shell.setAttribute("aria-hidden", "true");
+    shell.innerHTML = '<canvas id="duck-3d-canvas"></canvas>';
+    document.body.appendChild(shell);
+  }
+
+  return shell;
 }
 
-function initDuckScene() {
-  if (isInitialized) return;
+function initDuck() {
+  if (initialized) return;
 
-  const heroSection = document.querySelector(SELECTORS.heroSection);
-  const problemSection = document.querySelector(SELECTORS.problemSection);
-  const startAnchor = document.querySelector(SELECTORS.startAnchor);
-  const endAnchor = document.querySelector(SELECTORS.endAnchor);
-  const startTarget = document.querySelector(SELECTORS.startTarget);
-  const endTarget = document.querySelector(SELECTORS.endTarget);
+  const startAnchor = document.querySelector(DUCK.startAnchor);
+  const endAnchor = document.querySelector(DUCK.endAnchor);
+  const startTarget = document.querySelector(DUCK.startTarget);
+  const endTarget = document.querySelector(DUCK.endTarget);
+  const heroSection = document.querySelector(DUCK.heroSection);
+  const problemSection = document.querySelector(DUCK.problemSection);
 
-  if (!heroSection || !problemSection || !startAnchor || !endAnchor || !startTarget || !endTarget) {
+  if (!startAnchor || !endAnchor || !startTarget || !endTarget || !heroSection || !problemSection) {
     return;
   }
 
-  isInitialized = true;
+  initialized = true;
 
-  const duckElement = createDuckElement();
-  const canvas = duckElement.querySelector("#duck-float-canvas");
+  const shell = makeDuckShell();
+  const canvas = shell.querySelector("#duck-3d-canvas");
 
-  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true, powerPreference: "high-performance" });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  const renderer = new THREE.WebGLRenderer({
+    canvas,
+    alpha: true,
+    antialias: true,
+    powerPreference: "high-performance"
+  });
+
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
   renderer.setClearColor(0x000000, 0);
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
 
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(28, 1, 0.1, 100);
-  camera.position.set(0, 0, 8.6);
+  const camera = new THREE.OrthographicCamera(-2.15, 2.15, 2.15, -2.15, 0.1, 100);
+  camera.position.set(0, 0, 10);
+  camera.lookAt(0, 0, 0);
 
-  const ambientLight = new THREE.AmbientLight(0xffffff, 1.6);
-  const keyLight = new THREE.DirectionalLight(0xffffff, 2.4);
-  const fillLight = new THREE.DirectionalLight(0xfff2b6, 1.4);
-  const rimLight = new THREE.DirectionalLight(0xffd84d, 1.6);
-  const bottomLight = new THREE.DirectionalLight(0xd19a00, 0.7);
+  const group = new THREE.Group();
+  const modelHolder = new THREE.Group();
+  scene.add(group);
+  group.add(modelHolder);
 
-  keyLight.position.set(4.5, 5, 8);
-  fillLight.position.set(-5, 1.8, 4.6);
-  rimLight.position.set(-2.5, 3.2, -2.8);
-  bottomLight.position.set(0, -4, 3.2);
+  scene.add(new THREE.AmbientLight(0xffffff, 1.9));
 
-  scene.add(ambientLight, keyLight, fillLight, rimLight, bottomLight);
+  const key = new THREE.DirectionalLight(0xffffff, 2.35);
+  key.position.set(4, 6, 8);
+  scene.add(key);
 
-  const moveGroup = new THREE.Group();
-  const aimGroup = new THREE.Group();
-  const duckGroup = new THREE.Group();
+  const fill = new THREE.DirectionalLight(0xffec9a, 1.2);
+  fill.position.set(-5, 2, 5);
+  scene.add(fill);
 
-  scene.add(moveGroup);
-  moveGroup.add(aimGroup);
-  aimGroup.add(duckGroup);
+  const rim = new THREE.DirectionalLight(0xffd84d, 1.4);
+  rim.position.set(-4, 4, -4);
+  scene.add(rim);
 
-  const targetPoint = new THREE.Vector3();
-  const loader = new GLTFLoader();
-  const clock = new THREE.Clock();
-  const modelUrl = new URL("../assets/models/duck.glb", import.meta.url).href;
-  let ready = false;
+  let loaded = false;
+  let layout = {
+    progress: 0,
+    center: { x: 0, y: 0 },
+    target: { x: 0, y: 0 },
+    angle: 0
+  };
 
-  loader.load(
-    modelUrl,
+  new GLTFLoader().load(
+    DUCK.modelUrl,
     (gltf) => {
-      const root = gltf.scene;
-      const box = new THREE.Box3().setFromObject(root);
+      const model = gltf.scene;
+      const box = new THREE.Box3().setFromObject(model);
       const center = box.getCenter(new THREE.Vector3());
       const size = box.getSize(new THREE.Vector3());
-      const maxSize = Math.max(size.x, size.y, size.z) || 1;
+      const maxDimension = Math.max(size.x, size.y, size.z) || 1;
 
-      root.position.sub(center);
-      root.scale.setScalar(TUNING.duckScale / maxSize);
+      model.position.sub(center);
+      model.scale.setScalar(DUCK.normalizedModelSize / maxDimension);
 
-      root.traverse((child) => {
+      model.traverse((child) => {
         if (!child.isMesh) return;
-        const material = new THREE.MeshStandardMaterial({
-          color: TUNING.modelColor,
-          emissive: TUNING.emissiveColor,
-          emissiveIntensity: 0.22,
-          roughness: 0.82,
-          metalness: 0.03
+
+        child.material = new THREE.MeshStandardMaterial({
+          color: DUCK.color,
+          emissive: DUCK.emissive,
+          emissiveIntensity: 0.16,
+          roughness: 0.62,
+          metalness: 0.02
         });
-        child.material = material;
-        child.castShadow = false;
-        child.receiveShadow = false;
       });
 
-      duckGroup.add(root);
-
-      // O bico do pato aponta aproximadamente para +X no arquivo original.
-      // Essa rotação alinha o bico com a direção de "lookAt" do grupo pai.
-      duckGroup.rotation.set(TUNING.baseTiltX, Math.PI / 2, TUNING.baseTiltZ);
-      ready = true;
+      modelHolder.add(model);
+      modelHolder.rotation.set(DUCK.baseRotationX, DUCK.baseRotationY, DUCK.baseRotationZ);
+      loaded = true;
+      shell.classList.add("is-loaded");
     },
     undefined,
     (error) => {
-      console.error("Falha ao carregar duck.glb:", error);
+      console.error("duck.glb não carregou:", error);
+      shell.classList.add("is-error");
     }
   );
 
-  function resizeRenderer() {
-    const width = duckElement.clientWidth;
-    const height = duckElement.clientHeight;
-
-    if (width <= 0 || height <= 0) return;
-
-    camera.aspect = width / height;
-    camera.updateProjectionMatrix();
-    renderer.setSize(width, height, false);
-  }
-
-  function computeProgress() {
+  function progress() {
     const heroTop = window.scrollY + heroSection.getBoundingClientRect().top;
     const problemTop = window.scrollY + problemSection.getBoundingClientRect().top;
-    const problemHeight = problemSection.offsetHeight;
-
-    const start = heroTop - window.innerHeight * TUNING.startScrollInset;
-    const end = problemTop + problemHeight * 0.12 - window.innerHeight * TUNING.endScrollInset;
-    const raw = (window.scrollY - start) / Math.max(1, end - start);
-
-    return easeInOutCubic(clamp(raw));
+    const start = heroTop - window.innerHeight * 0.08;
+    const end = problemTop - window.innerHeight * 0.7;
+    return ease(clamp((window.scrollY - start) / Math.max(1, end - start)));
   }
 
-  function updateDuckLayout() {
-    const progress = computeProgress();
+  function updateLayout() {
+    const t = progress();
 
-    const startPoint = getRectPoint(startAnchor, TUNING.startAnchorOffset.x, TUNING.startAnchorOffset.y);
-    const endPoint = getRectPoint(endAnchor, TUNING.endAnchorOffset.x, TUNING.endAnchorOffset.y);
-    const lookStart = getRectPoint(startTarget, TUNING.startTargetOffset.x, TUNING.startTargetOffset.y);
-    const lookEnd = getRectPoint(endTarget, TUNING.endTargetOffset.x, TUNING.endTargetOffset.y);
+    const start = pointFromElement(startAnchor, DUCK.startAnchorPoint);
+    const end = pointFromElement(endAnchor, DUCK.endAnchorPoint);
+    const targetStart = pointFromElement(startTarget, DUCK.startTargetPoint);
+    const targetEnd = pointFromElement(endTarget, DUCK.endTargetPoint);
 
-    const x = lerp(startPoint.x, endPoint.x, progress);
-    const y = lerp(startPoint.y, endPoint.y, progress);
-    const width = lerp(TUNING.startViewportWidth, TUNING.endViewportWidth, progress);
-    const height = width;
+    const center = {
+      x: lerp(start.x, end.x, t),
+      y: lerp(start.y, end.y, t)
+    };
 
-    duckElement.style.width = `${width}px`;
-    duckElement.style.height = `${height}px`;
-    duckElement.style.transform = `translate3d(${x - width * 0.5}px, ${y - height * 0.5}px, 0)`;
+    const target = {
+      x: lerp(targetStart.x, targetEnd.x, t),
+      y: lerp(targetStart.y, targetEnd.y, t)
+    };
 
-    resizeRenderer();
+    const size = lerp(DUCK.startSize, DUCK.endSize, t) * clamp(window.innerWidth / 1280, 0.72, 1);
+    const dx = target.x - center.x;
+    const dy = target.y - center.y;
+    const angle = Math.atan2(-dy, dx) + DUCK.beakAngleOffset;
 
-    targetPoint.set(
-      lerp(lookStart.x, lookEnd.x, progress),
-      lerp(lookStart.y, lookEnd.y, progress),
-      0
-    );
+    shell.style.width = `${size}px`;
+    shell.style.height = `${size}px`;
+    shell.style.transform = `translate3d(${center.x - size / 2}px, ${center.y - size / 2}px, 0)`;
 
-    duckElement.dataset.progress = String(progress);
+    const w = Math.max(1, Math.round(shell.clientWidth));
+    const h = Math.max(1, Math.round(shell.clientHeight));
+    renderer.setSize(w, h, false);
+
+    layout = { progress: t, center, target, angle };
   }
 
-  function screenToWorld(x, y) {
-    const bounds = canvas.getBoundingClientRect();
-    const nx = ((x - bounds.left) / Math.max(1, bounds.width)) * 2 - 1;
-    const ny = -(((y - bounds.top) / Math.max(1, bounds.height)) * 2 - 1);
+  function animate() {
+    requestAnimationFrame(animate);
 
-    const vector = new THREE.Vector3(nx, ny, 0.12).unproject(camera);
-    const direction = vector.sub(camera.position).normalize();
-    const distance = -camera.position.z / direction.z;
+    updateLayout();
 
-    return camera.position.clone().add(direction.multiplyScalar(distance));
-  }
+    if (!loaded) return;
 
-  function render() {
-    requestAnimationFrame(render);
+    const time = performance.now() * 0.001;
+    const floatX = Math.cos(time * 0.9) * 0.035;
+    const floatY = Math.sin(time * 1.25) * 0.05;
+    const floatZ = Math.sin(time * 0.8) * 0.025;
 
-    if (!ready) return;
-
-    updateDuckLayout();
-
-    const time = clock.getElapsedTime();
-    const progress = Number(duckElement.dataset.progress || 0);
-    const viewportScale = clamp(window.innerWidth / 1440, TUNING.viewportMinScale, TUNING.viewportMaxScale);
-    const worldTarget = screenToWorld(targetPoint.x, targetPoint.y);
-
-    moveGroup.position.set(0, 0, 0);
-    aimGroup.position.set(0, 0, 0);
-    moveGroup.lookAt(worldTarget);
-
-    moveGroup.rotation.z += lerp(-0.06, 0.08, progress);
-    duckGroup.position.x = Math.cos(time * TUNING.floatSpeedX) * TUNING.floatX;
-    duckGroup.position.y = Math.sin(time * TUNING.floatSpeedY) * TUNING.floatY;
-    duckGroup.position.z = Math.sin(time * 0.85) * 0.02;
-
-    const pulse = 1 + Math.sin(time * 1.2) * 0.012;
-    duckGroup.scale.setScalar(viewportScale * pulse);
+    group.rotation.z = layout.angle;
+    modelHolder.rotation.x = DUCK.baseRotationX + Math.sin(time * 1.1) * 0.035;
+    modelHolder.rotation.y = DUCK.baseRotationY + Math.cos(time * 0.9) * 0.04;
+    modelHolder.position.set(floatX, floatY, floatZ);
 
     renderer.render(scene, camera);
   }
 
-  const resizeObserver = new ResizeObserver(() => updateDuckLayout());
-  resizeObserver.observe(document.body);
-  resizeObserver.observe(startAnchor);
-  resizeObserver.observe(endAnchor);
-  resizeObserver.observe(startTarget);
-  resizeObserver.observe(endTarget);
+  updateLayout();
+  animate();
 
-  window.addEventListener("resize", updateDuckLayout, { passive: true });
-  window.addEventListener("scroll", updateDuckLayout, { passive: true });
-  window.addEventListener("load", updateDuckLayout, { passive: true });
-
-  updateDuckLayout();
-  render();
+  window.addEventListener("scroll", updateLayout, { passive: true });
+  window.addEventListener("resize", updateLayout, { passive: true });
+  window.addEventListener("load", updateLayout, { passive: true });
 }
 
-document.addEventListener("sectionsLoaded", initDuckScene);
+document.addEventListener("sectionsLoaded", initDuck);

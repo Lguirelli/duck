@@ -1181,7 +1181,7 @@ details p {
 }
 
 /* =========================
-   FLOATING DUCK 3D
+   DUCK 3D FLOAT ELEMENT
 ========================= */
 
 main {
@@ -1196,80 +1196,63 @@ main {
   position: relative;
 }
 
+.duck-front-layer,
 .hero-copy,
-.problem-anchor-copy,
 .problem-copy {
   position: relative;
-  z-index: 2;
+  z-index: 20;
 }
 
-.hero-grid,
-.problem-grid {
-  align-items: center;
-}
-
-.duck-space {
-  min-height: 360px;
-}
-
-.duck-space-start {
+.duck-motion-anchor {
   position: relative;
+  min-height: 360px;
+  z-index: 0;
 }
 
-.problem-anchor-copy {
-  min-height: 160px;
-  padding: 10px 0;
+.duck-motion-anchor-end {
+  min-height: 220px;
 }
 
-.problem-anchor-copy h3,
-.problem-anchor-copy p {
-  max-width: 520px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-#duck-float {
+#duck-3d-float {
   position: fixed;
   top: 0;
   left: 0;
-  width: 360px;
-  height: 360px;
+  width: 330px;
+  height: 330px;
   pointer-events: none;
-  z-index: 1;
+  z-index: 10;
+  opacity: 0;
   transform: translate3d(0, 0, 0);
+  transition: opacity .28s ease;
   will-change: transform, width, height;
 }
 
-#duck-float-canvas {
+#duck-3d-float.is-loaded {
+  opacity: 1;
+}
+
+#duck-3d-canvas {
   width: 100%;
   height: 100%;
   display: block;
 }
 
-@media (max-width: 1100px) {
-  .duck-space {
-    min-height: 320px;
-  }
-}
-
 @media (max-width: 900px) {
-  .duck-space {
+  .duck-motion-anchor {
     min-height: 260px;
   }
 
-  .problem-anchor-copy {
-    min-height: 0;
+  .duck-motion-anchor-end {
+    min-height: 160px;
   }
 }
 
 @media (max-width: 720px) {
-  #duck-float {
-    width: 240px;
-    height: 240px;
-    opacity: .98;
+  .duck-motion-anchor {
+    min-height: 190px;
   }
 
-  .duck-space {
-    min-height: 180px;
+  .duck-motion-anchor-end {
+    min-height: 130px;
   }
 }
