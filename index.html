@@ -3,38 +3,244 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Landing page modular de alta conversão." />
-  <title>Landing Page Modular</title>
+  <meta name="description" content="Landing page editável com painel lateral, controle de seções e personalização de cores." />
+  <title>Landing Page Editável</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/styles.css" />
 </head>
-<body data-root="">
-  <a class="skip-link" href="#main">Pular para o conteúdo</a>
+<body>
+  <aside class="editor-panel" aria-label="Painel de edição da landing page">
+    <div class="editor-brand">
+      <div class="editor-logo" aria-hidden="true"></div>
+      <div>
+        <strong>Editor da Landing</strong>
+        <span>Duplo clique nos textos para editar</span>
+      </div>
+    </div>
 
-  <div id="site-header" data-section="sections/header.html"></div>
+    <div class="editor-block">
+      <h2>Seções visíveis</h2>
+      <label><input type="checkbox" data-toggle-section="hero" checked /> Hero principal</label>
+      <label><input type="checkbox" data-toggle-section="logos" checked /> Logos / confiança</label>
+      <label><input type="checkbox" data-toggle-section="problema" checked /> Problema</label>
+      <label><input type="checkbox" data-toggle-section="beneficios" checked /> Benefícios</label>
+      <label><input type="checkbox" data-toggle-section="servicos" checked /> Serviços</label>
+      <label><input type="checkbox" data-toggle-section="processo" checked /> Como funciona</label>
+      <label><input type="checkbox" data-toggle-section="provas" checked /> Provas sociais</label>
+      <label><input type="checkbox" data-toggle-section="faq" checked /> FAQ</label>
+      <label><input type="checkbox" data-toggle-section="cta" checked /> CTA final</label>
+    </div>
 
-  <main id="main">
-    <div data-section="sections/hero.html"></div>
-    <div data-section="sections/trust-strip.html"></div>
-    <div data-section="sections/problem.html"></div>
-    <div data-section="sections/benefits.html"></div>
-    <div data-section="sections/how-it-works.html"></div>
-    <div data-section="sections/features.html"></div>
-    <div data-section="sections/social-proof.html"></div>
-    <div data-section="sections/case-preview.html"></div>
-    <div data-section="sections/comparison.html"></div>
-    <div data-section="sections/services.html"></div>
-    <div data-section="sections/lead-qualifier.html"></div>
-    <div data-section="sections/faq.html"></div>
-    <div data-section="sections/final-cta.html"></div>
+    <div class="editor-block color-panel">
+      <h2>Cores da página</h2>
+      <label>Fundo <input type="color" data-color="--bg" value="#0b0d12" /></label>
+      <label>Texto <input type="color" data-color="--text" value="#f5f7fb" /></label>
+      <label>Texto secundário <input type="color" data-color="--muted" value="#b8c3d6" /></label>
+      <label>Primária <input type="color" data-color="--primary" value="#ffd84d" /></label>
+      <label>Destaque <input type="color" data-color="--accent" value="#64f4d0" /></label>
+      <label>Boxes <input type="color" data-color="--surface" value="#151923" /></label>
+    </div>
+
+    <div class="editor-block presets">
+      <h2>Paletas rápidas</h2>
+      <button type="button" data-preset="dark-yellow">Escuro amarelo</button>
+      <button type="button" data-preset="blue-cyan">Azul cyan</button>
+      <button type="button" data-preset="light-clean">Claro limpo</button>
+      <button type="button" data-preset="purple-pink">Roxo pink</button>
+    </div>
+
+    <div class="editor-actions">
+      <button type="button" class="btn-editor" id="resetEditor">Restaurar padrão</button>
+      <button type="button" class="btn-editor ghost" id="clearTexts">Limpar textos salvos</button>
+    </div>
+  </aside>
+
+  <main class="page-shell">
+    <header class="site-header">
+      <a class="brand" href="#hero" aria-label="Voltar ao início">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span data-editable="brand-name">Marca</span>
+      </a>
+      <nav class="nav" aria-label="Navegação principal">
+        <a href="#beneficios">Benefícios</a>
+        <a href="#servicos">Serviços</a>
+        <a href="#provas">Provas</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <a class="header-cta" href="#cta" data-editable="header-cta">Começar</a>
+    </header>
+
+    <section class="section hero-section" id="hero" data-section-id="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <span class="kicker" data-editable="hero-kicker">Apresentação principal</span>
+          <h1 data-editable="hero-title">Título forte da sua landing page editável.</h1>
+          <p class="lead" data-editable="hero-lead">Use esta área para explicar, em poucas linhas, o que sua solução faz, para quem ela serve e qual resultado ela promete entregar.</p>
+          <div class="button-row">
+            <a class="btn primary" href="#cta" data-editable="hero-button-primary">Quero começar</a>
+            <a class="btn secondary" href="#servicos" data-editable="hero-button-secondary">Ver serviços</a>
+          </div>
+          <p class="microcopy" data-editable="hero-microcopy">Texto curto de reforço: sem compromisso, resposta rápida ou benefício imediato.</p>
+        </div>
+        <div class="visual-card">
+          <span data-editable="hero-visual-title">Área visual principal</span>
+          <p data-editable="hero-visual-text">Use este box para mockup, imagem, vídeo, produto, print do sistema ou ilustração da solução.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section compact-section" id="logos" data-section-id="logos">
+      <div class="container">
+        <span class="kicker" data-editable="logos-kicker">Confiança</span>
+        <h2 class="section-title small" data-editable="logos-title">Espaço para marcas, parceiros ou clientes atendidos.</h2>
+        <div class="logo-strip">
+          <div data-editable="logo-1">Logo 01</div>
+          <div data-editable="logo-2">Logo 02</div>
+          <div data-editable="logo-3">Logo 03</div>
+          <div data-editable="logo-4">Logo 04</div>
+          <div data-editable="logo-5">Logo 05</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="problema" data-section-id="problema">
+      <div class="container two-columns reverse-mobile">
+        <div class="card emphasis-card">
+          <span class="kicker" data-editable="problem-card-kicker">Dor do cliente</span>
+          <h2 data-editable="problem-card-title">Mostre o problema que a pessoa já sente.</h2>
+          <p data-editable="problem-card-text">Explique a dificuldade, o custo da inação e por que continuar fazendo do jeito atual pode gerar perda de tempo, dinheiro ou oportunidades.</p>
+        </div>
+        <div>
+          <span class="kicker" data-editable="problem-kicker">Problema</span>
+          <h2 class="section-title" data-editable="problem-title">Antes de vender, deixe claro o cenário que precisa mudar.</h2>
+          <p class="lead" data-editable="problem-text">Esta seção serve para criar identificação. O visitante precisa olhar para o texto e pensar: “é exatamente isso que acontece comigo”.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="beneficios" data-section-id="beneficios">
+      <div class="container">
+        <span class="kicker" data-editable="benefits-kicker">Benefícios</span>
+        <h2 class="section-title" data-editable="benefits-title">Transforme recursos em ganhos claros para o cliente.</h2>
+        <p class="lead" data-editable="benefits-lead">Use esta área para explicar os principais resultados que a pessoa terá ao contratar, comprar ou entrar em contato.</p>
+        <div class="cards-grid three">
+          <article class="card">
+            <div class="icon-dot">01</div>
+            <h3 data-editable="benefit-1-title">Mais clareza</h3>
+            <p data-editable="benefit-1-text">Explique o benefício prático que resolve uma dor real do público.</p>
+          </article>
+          <article class="card">
+            <div class="icon-dot">02</div>
+            <h3 data-editable="benefit-2-title">Mais velocidade</h3>
+            <p data-editable="benefit-2-text">Mostre como a solução economiza tempo ou reduz etapas desnecessárias.</p>
+          </article>
+          <article class="card">
+            <div class="icon-dot">03</div>
+            <h3 data-editable="benefit-3-title">Mais resultado</h3>
+            <p data-editable="benefit-3-text">Conecte o benefício a uma consequência desejada pelo cliente.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="servicos" data-section-id="servicos">
+      <div class="container">
+        <span class="kicker" data-editable="services-kicker">Serviços</span>
+        <h2 class="section-title" data-editable="services-title">Apresente suas principais ofertas de forma simples.</h2>
+        <div class="cards-grid three service-grid">
+          <article class="card service-card">
+            <span data-editable="service-1-category">Serviço 01</span>
+            <h3 data-editable="service-1-title">Nome do serviço principal</h3>
+            <p data-editable="service-1-text">Explique o que está incluso, para quem serve e qual problema resolve.</p>
+          </article>
+          <article class="card service-card featured">
+            <span data-editable="service-2-category">Mais buscado</span>
+            <h3 data-editable="service-2-title">Oferta de maior valor</h3>
+            <p data-editable="service-2-text">Use este card para destacar o serviço com maior potencial de conversão.</p>
+          </article>
+          <article class="card service-card">
+            <span data-editable="service-3-category">Serviço 03</span>
+            <h3 data-editable="service-3-title">Solução complementar</h3>
+            <p data-editable="service-3-text">Mostre uma alternativa, pacote menor ou serviço adicional.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="processo" data-section-id="processo">
+      <div class="container">
+        <span class="kicker" data-editable="process-kicker">Como funciona</span>
+        <h2 class="section-title" data-editable="process-title">Explique o caminho até a entrega em poucos passos.</h2>
+        <div class="steps">
+          <article class="step">
+            <strong>01</strong>
+            <h3 data-editable="step-1-title">Diagnóstico</h3>
+            <p data-editable="step-1-text">Entendimento do cenário, objetivo e principais necessidades.</p>
+          </article>
+          <article class="step">
+            <strong>02</strong>
+            <h3 data-editable="step-2-title">Construção</h3>
+            <p data-editable="step-2-text">Criação da solução, conteúdo, estratégia ou estrutura definida.</p>
+          </article>
+          <article class="step">
+            <strong>03</strong>
+            <h3 data-editable="step-3-title">Entrega</h3>
+            <p data-editable="step-3-text">Publicação, validação e ajustes finais para começar a gerar resultado.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="provas" data-section-id="provas">
+      <div class="container two-columns">
+        <div>
+          <span class="kicker" data-editable="proof-kicker">Provas</span>
+          <h2 class="section-title" data-editable="proof-title">Mostre por que o visitante pode confiar.</h2>
+          <p class="lead" data-editable="proof-text">Use esta seção para depoimentos, números, cases, resultados, clientes atendidos ou diferenciais concretos.</p>
+        </div>
+        <div class="proof-list">
+          <article class="mini-card"><strong data-editable="proof-number-1">+100</strong><span data-editable="proof-label-1">Projetos, clientes ou entregas realizadas</span></article>
+          <article class="mini-card"><strong data-editable="proof-number-2">95%</strong><span data-editable="proof-label-2">Índice de satisfação ou melhoria percebida</span></article>
+          <article class="mini-card"><strong data-editable="proof-number-3">24h</strong><span data-editable="proof-label-3">Tempo médio de resposta ou início do atendimento</span></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="faq" data-section-id="faq">
+      <div class="container narrow">
+        <span class="kicker" data-editable="faq-kicker">FAQ</span>
+        <h2 class="section-title" data-editable="faq-title">Responda as dúvidas que travam a decisão.</h2>
+        <div class="faq-list">
+          <details open>
+            <summary data-editable="faq-1-question">Como funciona a contratação?</summary>
+            <p data-editable="faq-1-answer">Explique o primeiro contato, diagnóstico, proposta e próximos passos.</p>
+          </details>
+          <details>
+            <summary data-editable="faq-2-question">Quanto tempo leva para começar?</summary>
+            <p data-editable="faq-2-answer">Explique o prazo médio e o que influencia o tempo de entrega.</p>
+          </details>
+          <details>
+            <summary data-editable="faq-3-question">Preciso ter algo pronto antes?</summary>
+            <p data-editable="faq-3-answer">Explique quais materiais, informações ou acessos ajudam no processo.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section class="section final-section" id="cta" data-section-id="cta">
+      <div class="container">
+        <div class="final-box">
+          <span class="kicker" data-editable="cta-kicker">Próximo passo</span>
+          <h2 data-editable="cta-title">Finalize com uma chamada clara para ação.</h2>
+          <p data-editable="cta-text">Explique o que a pessoa deve fazer agora e qual benefício ela terá ao clicar no botão.</p>
+          <a class="btn primary" href="mailto:contato@exemplo.com" data-editable="cta-button">Entrar em contato</a>
+        </div>
+      </div>
+    </section>
   </main>
 
-  <div id="site-footer" data-section="sections/footer.html"></div>
-
-  <script src="js/include-sections.js" defer></script>
   <script src="js/main.js" defer></script>
-  <script type="module" src="js/duck-scroll-scene.js"></script>
 </body>
 </html>
