@@ -3085,3 +3085,177 @@ small,
     -webkit-tap-highlight-color: rgba(255, 216, 77, .18);
   }
 }
+
+/* =========================
+   PATCH: SWITCH, RESTAURAR E CONTAINERS DINÂMICOS
+========================= */
+
+html,
+body {
+  overflow-x: hidden !important;
+}
+
+.container,
+.grid-2,
+.grid-3,
+.comparison-grid,
+.logo-strip,
+.footer-grid,
+.service-grid-static,
+.card,
+.placeholder,
+.logo-box,
+.service-slide,
+.final-cta-box,
+.hero-copy,
+.problem-copy,
+.benefit-list,
+.benefit-item,
+.faq-list,
+.comparison-item,
+.case-preview-card,
+.social-proof-card {
+  min-width: 0 !important;
+  max-width: 100% !important;
+}
+
+.grid-2 {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr)) !important;
+  align-items: center !important;
+}
+
+.grid-3,
+.service-grid-static,
+.comparison-grid {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)) !important;
+}
+
+.logo-strip {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 160px), 1fr)) !important;
+}
+
+.footer-grid {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)) !important;
+  align-items: start !important;
+}
+
+.card,
+.placeholder,
+.logo-box,
+.service-slide,
+.final-cta-box,
+.hero-proof span,
+.btn {
+  overflow-wrap: anywhere !important;
+  word-break: normal !important;
+  hyphens: none !important;
+  white-space: normal !important;
+}
+
+.editor-panel .editor-group:first-child,
+.editor-panel .theme-toggle-button,
+.editor-panel .theme-toggle-track,
+.editor-panel .theme-toggle-dot,
+.editor-panel .theme-switch-text {
+  box-sizing: border-box !important;
+}
+
+.editor-panel .editor-group:first-child {
+  overflow: hidden !important;
+}
+
+.editor-panel .theme-toggle-button {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  overflow: hidden !important;
+  transform: none !important;
+}
+
+.editor-panel .theme-toggle-track {
+  position: relative !important;
+  width: 38px !important;
+  height: 22px !important;
+  min-width: 38px !important;
+  flex: 0 0 38px !important;
+  padding: 2px !important;
+  border-radius: 999px !important;
+  background: #242832 !important;
+  border: 1px solid rgba(255, 255, 255, .22) !important;
+  box-shadow: none !important;
+  overflow: hidden !important;
+}
+
+.editor-panel .theme-toggle-dot {
+  position: absolute !important;
+  top: 2px !important;
+  left: 2px !important;
+  width: 16px !important;
+  height: 16px !important;
+  border-radius: 999px !important;
+  background: #ffd84d !important;
+  box-shadow: none !important;
+  transform: translateX(0) !important;
+  transition: transform .14s ease !important;
+}
+
+.editor-panel .theme-toggle-button[aria-pressed="true"] .theme-toggle-dot {
+  transform: translateX(16px) !important;
+}
+
+.editor-panel .theme-switch-text {
+  flex: 0 1 auto !important;
+  min-width: 0 !important;
+  max-width: calc(100% - 46px) !important;
+  font-size: 12px !important;
+  line-height: 1 !important;
+  color: #f5f7fb !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+.editor-panel .editor-reset,
+.editor-panel .editor-reset:hover,
+.editor-panel .editor-reset:focus,
+.editor-panel .editor-reset:active,
+body[data-theme="light"] .editor-panel .editor-reset,
+body[data-theme="light"] .editor-panel .editor-reset:hover,
+body[data-theme="dark"] .editor-panel .editor-reset,
+body[data-theme="dark"] .editor-panel .editor-reset:hover {
+  background: #ffd84d !important;
+  border-color: #ffd84d !important;
+  color: #111111 !important;
+  box-shadow: none !important;
+  filter: none !important;
+  transform: none !important;
+}
+
+@media (max-width: 720px) {
+  .editor-panel .editor-group:first-child {
+    max-width: calc(100vw - 28px) !important;
+    padding: 8px !important;
+  }
+
+  .editor-panel .theme-toggle-button {
+    width: auto !important;
+    max-width: 100% !important;
+  }
+
+  .grid-2,
+  .grid-3,
+  .service-grid-static,
+  .comparison-grid,
+  .logo-strip,
+  .footer-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
