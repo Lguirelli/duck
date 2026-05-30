@@ -2381,3 +2381,166 @@ body[data-theme="dark"] .editor-panel {
 .editor-panel label {
   cursor: pointer;
 }
+
+/* =========================
+   FLAT LIGHT MODE + SMALL CLICK SWITCH
+========================= */
+
+body[data-theme="light"] {
+  --bg: #d8d8d8;
+  --surface: #f2f2f2;
+  --surface-2: #e7e7e7;
+  --text: #101318;
+  --muted: #3e4857;
+  --line: rgba(16, 19, 24, .16);
+  --brand: #101318;
+  --accent: #101318;
+  --accent-2: #2b3038;
+  background: #d8d8d8 !important;
+}
+
+body[data-theme="light"] .editable-main,
+body[data-theme="light"] main {
+  background: #d8d8d8 !important;
+}
+
+body[data-theme="light"] .site-header {
+  background: #c9c9c9 !important;
+  border-bottom: 1px solid rgba(16, 19, 24, .14) !important;
+  color: var(--text) !important;
+  box-shadow: none !important;
+}
+
+body[data-theme="light"] .site-footer {
+  background: #c5c5c5 !important;
+  border-top: 1px solid rgba(16, 19, 24, .14) !important;
+  color: var(--muted) !important;
+}
+
+body[data-theme="light"] .section-kicker {
+  color: var(--accent) !important;
+}
+
+body[data-theme="light"] .logo-mark,
+body[data-theme="light"] .icon-placeholder,
+body[data-theme="light"] .btn-accent {
+  background: var(--accent) !important;
+  border-color: var(--accent) !important;
+  color: #ffffff !important;
+}
+
+body[data-theme="light"] .hero,
+body[data-theme="light"] .section,
+body[data-theme="light"] .section:nth-of-type(even) {
+  background: transparent !important;
+}
+
+body[data-theme="light"] .card,
+body[data-theme="light"] .service-slide,
+body[data-theme="light"] details,
+body[data-theme="light"] .placeholder,
+body[data-theme="light"] .logo-box {
+  background: var(--surface) !important;
+  border-color: var(--line) !important;
+  box-shadow: none !important;
+}
+
+.editor-panel,
+body[data-theme="light"] .editor-panel,
+body[data-theme="dark"] .editor-panel {
+  background: rgba(9, 12, 16, .97) !important;
+  color: #f5f7fb !important;
+  border-right: 1px solid rgba(255, 255, 255, .12) !important;
+}
+
+.editor-panel .editor-group-title,
+.editor-panel .editor-label,
+.editor-panel .section-toggle,
+.editor-panel .color-control,
+.editor-panel .theme-switch-text {
+  color: #f5f7fb !important;
+}
+
+.editor-panel .editor-group-title,
+.editor-panel .editor-label {
+  color: #ffd84d !important;
+}
+
+.editor-panel .theme-toggle-button {
+  width: 100% !important;
+  min-height: auto !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  color: #f5f7fb !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 10px !important;
+  cursor: pointer !important;
+  user-select: none !important;
+  touch-action: manipulation !important;
+  transform: none !important;
+  box-shadow: none !important;
+  filter: none !important;
+  overflow: visible !important;
+}
+
+.editor-panel .theme-toggle-button:hover,
+.editor-panel .theme-toggle-button:active {
+  transform: none !important;
+  box-shadow: none !important;
+  filter: none !important;
+  background: transparent !important;
+}
+
+.editor-panel .theme-toggle-button:focus-visible {
+  outline: 2px solid #ffd84d !important;
+  outline-offset: 4px !important;
+}
+
+.editor-panel .theme-toggle-track {
+  position: relative !important;
+  flex: 0 0 auto !important;
+  width: 44px !important;
+  height: 24px !important;
+  border-radius: 999px !important;
+  border: 1px solid rgba(255, 255, 255, .2) !important;
+  background: #252a33 !important;
+  transition: background .18s ease, border-color .18s ease !important;
+}
+
+.editor-panel .theme-toggle-dot {
+  position: absolute !important;
+  top: 50% !important;
+  left: 3px !important;
+  width: 18px !important;
+  height: 18px !important;
+  border-radius: 999px !important;
+  background: #f5f7fb !important;
+  box-shadow: none !important;
+  transform: translateY(-50%) !important;
+  transition: left .18s ease, background .18s ease !important;
+}
+
+.editor-panel .theme-toggle-button[aria-pressed="true"] .theme-toggle-track {
+  background: #ffd84d !important;
+  border-color: #ffd84d !important;
+}
+
+.editor-panel .theme-toggle-button[aria-pressed="true"] .theme-toggle-dot {
+  left: 21px !important;
+  background: #11151b !important;
+  box-shadow: none !important;
+}
+
+.editor-panel .theme-switch-text {
+  display: inline-block !important;
+  width: auto !important;
+  min-width: 48px !important;
+  font-size: 13px !important;
+  font-weight: 900 !important;
+  line-height: 1 !important;
+  text-align: left !important;
+  pointer-events: none !important;
+}
