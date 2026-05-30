@@ -89,26 +89,37 @@ function initColorControls() {
   });
 }
 
-function initThemeToggle() {
+function setEditableTheme(theme) {
   const toggle = document.querySelector("#themeToggle");
   const label = document.querySelector("[data-theme-label]");
+  const nextTheme = theme === "light" ? "light" : "dark";
+
+  document.body.dataset.theme = nextTheme;
+
+  if (toggle) {
+    toggle.setAttribute("aria-pressed", nextTheme === "light" ? "true" : "false");
+    toggle.setAttribute("aria-label", nextTheme === "light" ? "Alterar para modo escuro" : "Alterar para modo claro");
+  }
+
+  if (label) {
+    label.textContent = nextTheme === "light" ? "Claro" : "Escuro";
+  }
+}
+
+function initThemeToggle() {
+  const toggle = document.querySelector("#themeToggle");
 
   if (!toggle) return;
 
-  function setTheme(theme) {
-    const nextTheme = theme === "light" ? "light" : "dark";
-    document.body.dataset.theme = nextTheme;
-    toggle.setAttribute("aria-pressed", nextTheme === "light" ? "true" : "false");
-    if (label) label.textContent = nextTheme === "light" ? "Claro" : "Escuro";
-  }
-
   toggle.addEventListener("click", (event) => {
     event.preventDefault();
+    event.stopPropagation();
+
     const currentTheme = document.body.dataset.theme === "light" ? "light" : "dark";
-    setTheme(currentTheme === "light" ? "dark" : "light");
+    setEditableTheme(currentTheme === "light" ? "dark" : "light");
   });
 
-  setTheme(document.body.dataset.theme || "dark");
+  setEditableTheme(document.body.dataset.theme || "dark");
 }
 
 function initResetButton() {
@@ -118,16 +129,11 @@ function initResetButton() {
 
   resetButton.addEventListener("click", () => {
     document.body.removeAttribute("style");
-    document.body.dataset.theme = "dark";
+    setEditableTheme("dark");
 
     document.querySelectorAll("[data-color-var]").forEach((input) => {
       input.value = input.dataset.defaultValue || input.getAttribute("value") || input.value;
     });
-
-    const themeToggle = document.querySelector("#themeToggle");
-    const themeLabel = document.querySelector("[data-theme-label]");
-    if (themeToggle) themeToggle.setAttribute("aria-pressed", "false");
-    if (themeLabel) themeLabel.textContent = "Escuro";
 
     document.querySelectorAll("[data-section-toggle]").forEach((toggle) => {
       toggle.checked = true;

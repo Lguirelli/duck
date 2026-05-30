@@ -2201,3 +2201,183 @@ h3.editable-text {
 .editor-panel label {
   pointer-events: auto;
 }
+
+/* =========================
+   LIGHT MODE AND CLICK SWITCH FINAL FIX
+========================= */
+
+body[data-theme="light"] {
+  --bg: #f7f1df;
+  --surface: #fffdf8;
+  --surface-2: #f1e7d3;
+  --text: #11151b;
+  --muted: #435064;
+  --line: rgba(17, 21, 27, .16);
+  --brand: #11151b;
+  --accent: #d9a900;
+  --accent-2: #e8c94c;
+  --hero-bg-a: rgba(217, 169, 0, .12);
+  --hero-bg-b: rgba(17, 21, 27, .035);
+  background:
+    radial-gradient(circle at 12% 0%, var(--hero-bg-a), transparent 34%),
+    radial-gradient(circle at 88% 12%, var(--hero-bg-b), transparent 34%),
+    var(--bg) !important;
+}
+
+body[data-theme="dark"] {
+  --accent: #ffd84d;
+  --accent-2: #d9f99d;
+}
+
+.site-header {
+  background: color-mix(in srgb, var(--bg) 91%, #000000 9%) !important;
+  color: var(--text) !important;
+  border-bottom: 1px solid color-mix(in srgb, var(--line) 70%, transparent) !important;
+  box-shadow: none !important;
+}
+
+.site-footer {
+  background: color-mix(in srgb, var(--bg) 90%, #000000 10%) !important;
+  color: var(--muted) !important;
+  border-top: 1px solid color-mix(in srgb, var(--line) 70%, transparent) !important;
+}
+
+body[data-theme="light"] .site-header {
+  background: color-mix(in srgb, var(--bg) 94%, #000000 6%) !important;
+}
+
+body[data-theme="light"] .site-footer {
+  background: color-mix(in srgb, var(--bg) 92%, #000000 8%) !important;
+}
+
+body[data-theme="light"] .section-kicker,
+body[data-theme="light"] .editor-group-title,
+body[data-theme="light"] .editor-label {
+  color: var(--accent) !important;
+}
+
+body[data-theme="light"] .logo-mark,
+body[data-theme="light"] .icon-placeholder,
+body[data-theme="light"] .btn-accent,
+body[data-theme="light"] .editor-reset {
+  background: var(--accent) !important;
+  border-color: var(--accent) !important;
+  color: #11151b !important;
+}
+
+body[data-theme="light"] .btn-secondary {
+  color: var(--text) !important;
+  border-color: color-mix(in srgb, var(--text) 18%, transparent) !important;
+  background: transparent !important;
+}
+
+.editor-panel,
+body[data-theme="light"] .editor-panel,
+body[data-theme="dark"] .editor-panel {
+  background: rgba(9, 12, 16, .97) !important;
+  color: #f5f7fb !important;
+  border-right: 1px solid rgba(255, 255, 255, .12) !important;
+}
+
+.editor-panel .editor-group-title,
+.editor-panel .editor-label {
+  color: #ffd84d !important;
+}
+
+.editor-panel .theme-toggle-button {
+  position: relative !important;
+  width: 100% !important;
+  min-height: 42px !important;
+  display: block !important;
+  padding: 0 46px !important;
+  border: 1px solid rgba(255, 255, 255, .18) !important;
+  border-radius: 999px !important;
+  background: #151a23 !important;
+  color: #f5f7fb !important;
+  cursor: pointer !important;
+  user-select: none !important;
+  touch-action: manipulation !important;
+  transition: background .18s ease, border-color .18s ease !important;
+  transform: none !important;
+  box-shadow: none !important;
+  overflow: hidden !important;
+}
+
+.editor-panel .theme-toggle-button:hover,
+.editor-panel .theme-toggle-button:active {
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.editor-panel .theme-toggle-button:focus-visible {
+  outline: 2px solid #ffd84d !important;
+  outline-offset: 3px !important;
+}
+
+.editor-panel .theme-toggle-dot {
+  position: absolute !important;
+  top: 50% !important;
+  left: 6px !important;
+  width: 28px !important;
+  height: 28px !important;
+  border-radius: 999px !important;
+  background: #f5f7fb !important;
+  box-shadow: 0 0 18px rgba(245, 247, 251, .22) !important;
+  transform: translateY(-50%) !important;
+  transition: left .2s ease, background .2s ease, box-shadow .2s ease !important;
+}
+
+.editor-panel .theme-toggle-button[aria-pressed="true"] {
+  background: color-mix(in srgb, #ffd84d 28%, #151a23) !important;
+  border-color: rgba(255, 216, 77, .5) !important;
+}
+
+.editor-panel .theme-toggle-button[aria-pressed="true"] .theme-toggle-dot {
+  left: calc(100% - 34px) !important;
+  background: #ffd84d !important;
+  box-shadow: 0 0 18px rgba(255, 216, 77, .34) !important;
+}
+
+.editor-panel .theme-switch-text {
+  display: block !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  color: #f5f7fb !important;
+  font-size: 13px !important;
+  font-weight: 900 !important;
+  line-height: 42px !important;
+  text-align: center !important;
+  pointer-events: none !important;
+}
+
+.editable-main .btn,
+.site-header .btn,
+.site-footer .btn {
+  cursor: text !important;
+  transition: none !important;
+  transform: none !important;
+  box-shadow: none !important;
+  filter: none !important;
+  animation: none !important;
+}
+
+.editable-main .btn:hover,
+.editable-main .btn:active,
+.editable-main .btn:focus,
+.site-header .btn:hover,
+.site-header .btn:active,
+.site-header .btn:focus,
+.site-footer .btn:hover,
+.site-footer .btn:active,
+.site-footer .btn:focus {
+  transform: none !important;
+  box-shadow: none !important;
+  filter: none !important;
+  translate: none !important;
+}
+
+.editor-panel button,
+.editor-panel input,
+.editor-panel label {
+  cursor: pointer;
+}
